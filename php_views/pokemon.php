@@ -10,9 +10,9 @@
 
 <body>
     <label for="txtNumero">Número</label>
-    <input type="text" name="txtNumero" id="txtNumero"><br>
+    <input type="text" name="txtNumero" id="txtNumero" maxlength="3" placeholder="Número del pokémon" autofocus><br>
     <label for="txtNombre">Nombre</label>
-    <input type="text" name="txtNombre" id="txtNombre"><br>
+    <input type="text" name="txtNombre" id="txtNombre" placeholder="Nombre del pokémon"><br>
     <label for="region">Región</label>
     <select name="region" id="region">
         <option value="kanto">Kanto</option>
@@ -22,26 +22,26 @@
         <option value="teselia">Teselia</option>
     </select><br>
     <label for="tipo">Tipo</label>
-    <input type="checkbox" name="planta" id="planta">Planta
-    <input type="checkbox" name="veneno" id="veneno">Veneno
-    <input type="checkbox" name="fuego" id="fuego">Fuego
-    <input type="checkbox" name="volador" id="volador">Volador
-    <input type="checkbox" name="agua" id="agua">Agua
-    <input type="checkbox" name="electrico" id="electrico">Eléctrico
-    <input type="checkbox" name="hada" id="hada">Hada
-    <input type="checkbox" name="bicho" id="bicho">Bicho
-    <input type="checkbox" name="lucha" id="lucha">Lucha
-    <input type="checkbox" name="psiquico" id="psiquico">Psíquico <br>
+    <input type="checkbox" name="tipoPokemon[]" id="planta" value="planta">Planta
+    <input type="checkbox" name="tipoPokemon[]" id="veneno" value="veneno">Veneno
+    <input type="checkbox" name="tipoPokemon[]" id="fuego" value="fuego">Fuego
+    <input type="checkbox" name="tipoPokemon[]" id="volador" value="volador">Volador
+    <input type="checkbox" name="tipoPokemon[]" id="agua" value="agua">Agua
+    <input type="checkbox" name="tipoPokemon[]" id="electrico" value="electrico">Eléctrico
+    <input type="checkbox" name="tipoPokemon[]" id="hada" value="hada">Hada
+    <input type="checkbox" name="tipoPokemon[]" id="bicho" value="bicho">Bicho
+    <input type="checkbox" name="tipoPokemon[]" id="lucha" value="lucha">Lucha
+    <input type="checkbox" name="tipoPokemon[]" id="psiquico" value="psiqiuco">Psíquico <br>
     <label for="altura">Altura</label>
-    <input type="number" name="altura" id="altura"><br>
+    <input type="number" name="altura" id="altura" min="1"><br>
     <label for="peso">Peso</label>
     <input type="number" min="0" step=".01" name="peso" id="peso"><br>
     <label for="evolucion">Evolución</label>
-    <input type="radio" name="rEvolucion" id="rbSinEvolucionar">
+    <input type="radio" name="rEvolucion" id="rbSinEvolucionar" value="rbSinEvolucionar">
     <label for="rbSinEvolucionar">Sin Evolucionar</label>
-    <input type="radio" name="rEvolucion" id="rbPrimeraEvolucion">
+    <input type="radio" name="rEvolucion" id="rbPrimeraEvolucion" value="rbPrimeraEvolucion">
     <label for="rbPrimeraEvolucion">Primera evolución</label>
-    <input type="radio" name="rEvolucion" id="rbSegundaEvolucion">
+    <input type="radio" name="rEvolucion" id="rbSegundaEvolucion" value="rbSegundaEvolucion">
     <label for="rbSegundaEvolucion">Segunda evolución</label><br>
     <label for="imagen">Imagen</label>
     <input type="file" id="imagen" name="imagen" accept="image/png, image/jpeg"><br>

@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand  " href="\pokemons\index.php"><img src="/pokemons/media/Pokédex_DPP.png"  height="30">Pokedex</a>
+    <a class="navbar-brand" href="/pokemon/index.php"><img src="/pokemon/media/Pokédex_DPP.png"  height="30">Pokedex</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -11,7 +11,7 @@
             Datos maestros
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="\pokemons\php_views\pokemon_list.php">Pokemons</a></li>
+            <li><a class="dropdown-item" href="/pokemon/php_views/pokemon_list.php">Pokemons</a></li>
       
           </ul>
         </li>
