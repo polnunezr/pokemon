@@ -13,7 +13,6 @@
 <body>
     <?php 
     include 'php_partials/menu.php';
- 
     ?>
 </body>
 </html>

@@ -150,8 +150,8 @@ include '../php_partials/menu.php';
         </div>
     </div>
 
-    <div class="position-bottom position-fixed bottom-0 end-0 m-5" style="height:20px;width:2px;">
-        <a href="pokemon.php" type="button" class="btn bg-warning text-dark rounded-circle"><i class="fas fa-plus"></i></a>
+    <div class="position-bottom position-fixed bottom-0 end-0 m-5" style="height:25px;width:2px;">
+        <a href="pokemon.php" type="button" class="btn bg-warning text-dark rounded"><i class="fas fa-plus"></i></a>
     </div>
 
 
