@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 function crearPokemon($numero, $nom, $regio, $tipus, $alcada, $pes, $evolucio, $imatge)
 {
@@ -24,12 +25,13 @@ function addPokemon(&$pokedex, $pokemon)
         if ($pokedex[$i]['Numero'] == $pokemon['Numero']) {
             echo 'El pokemon ya existe' .'<br>';
             $pokemonExist = true;
+            $_SESSION['addPokemon'] = 'Error, el pokemon ya existe';
         }
         $i++;
     }
     if (!$pokemonExist) {
         array_push($pokedex, $pokemon);
-        echo 'Add pokemon completed' .'<br>';
+        $_SESSION['addPokemon'] = 'Pokemon añadido correctamente' .'<br>';
     }
 
     return $pokedex;
@@ -90,9 +92,10 @@ function deletePokemon(&$pokedex, $numero)
 {
     $indexOfPokemon = array_search($numero, array_column($pokedex, 'Numero'));
     if ($indexOfPokemon === false) {
-        echo 'El numero del pokemon seleccionado no se encuentra en la pokedex' .'<br>';
+        $_SESSION['deletePokemon'] = 'El pokemon seleccionado no se encuentra en la pokedex' .'<br>';
     } else {
         unset($pokedex[$indexOfPokemon]);
+        $_SESSION['deletePokemon'] = 'El pokemon seleccionado se ha borrado de la pokedex' .'<br>';
         $pokedex = array_values($pokedex);
     }
     return $pokedex;
