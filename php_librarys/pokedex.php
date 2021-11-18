@@ -23,7 +23,6 @@ function addPokemon(&$pokedex, $pokemon)
     $pokemonExist = false;
     while (!$pokemonExist  && $i < count($pokedex)) {
         if ($pokedex[$i]['Numero'] == $pokemon['Numero']) {
-            echo 'El pokemon ya existe' .'<br>';
             $pokemonExist = true;
             $_SESSION['addPokemon'] = 'Error, el pokemon ya existe';
         }

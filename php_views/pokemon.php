@@ -14,18 +14,18 @@
     <body>
         <div class="container-fluid" style="width: 45%;height:55%;margin-top:200px">
 
-            <form class="border border-dark justify-content-center">
+            <form class="border border-dark justify-content-center" action="../php_controllers/pokemonController.php" method="POST" enctype="multipart/form-data">
                 <header class="card-header"><img src="../media/pokeball.png" height="20">Pokemon</header>
                 <div class="form-group row">
                     <label for="txtNumero" class="col-sm-2 col-form-label">Número:</label>
                     <div class="col-sm-10">
-                        <input class="form-control w-75" type="text" name="txtNumero" id="txtNumero" maxlength="3" placeholder="Número del pokémon" autofocus><br>
+                        <input class="form-control w-75" type="text" name="txtNumero" id="txtNumero" maxlength="3" placeholder="Número del pokémon" autofocus required><br>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="txtNombre" class="col-sm-2 col-form-label">Nombre</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control w-75" name="txtNombre" id="txtNombre" placeholder="Nombre del pokémon">
+                        <input type="text" class="form-control w-75" name="txtNombre" id="txtNombre" placeholder="Nombre del pokémon" required>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -95,13 +95,14 @@
                 <div class="form-group row">
                     <label for="imagen" class="col-sm-2 col-form-label">Imagen</label>
                     <div class="col-sm-10">
-                        <input type="file" id="imagen" name="imagen" accept="image/png, image/jpeg">
+                        <input  name="imagen" type="file" id="imagen" accept="image/png, image/jpeg">
 
                     </div>
                 </div>
-
+                <div class="card-footer text-end">
                     <a class="btn btn-secondary text-end" href="\pokemon\index.php" role="button">Cancelar</a>
-                    <button type="submit" class="btn btn-primary text-end">Aceptar</button>
+                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                    </div>
             </form>
             
         </div>
