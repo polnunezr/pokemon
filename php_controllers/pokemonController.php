@@ -14,8 +14,16 @@ if(isset($_FILES['imagen'])){
    move_uploaded_file($rutaTemporal,$_FILES['imagen']['name']);
 }
 //Creamos el pokemon
-$imagen = null;
+$imagen = $_FILES['imagen']['name'];
 $pokemon = crearPokemon($_POST['txtNumero'],$_POST['txtNombre'],$_POST['region'],$_POST['tipoPokemon'],$_POST['altura'],$_POST['peso'],$_POST['rEvolucion'],$imagen);
-if($imagen == null) {
-    echo '<p><img src="../media/'.$_FILES['imagen']['name'].'"></p>';
+
+$pokedex = addPokemon($pokedex,$pokemon);
+if($_SESSION['addPokemon' ] == 'Pokemon añadido correctamente') {
+    move_uploaded_file($rutaTemporal,"../media/");
+    header("Location: ../php_views/pokemon_list.php");
+    exit();
+} else {
+    $_SESSION['pokemon'] = $pokemon;
+    header("Location: ../php_views/pokemon.php");
+    exit();
 }
