@@ -27,3 +27,15 @@ if($_SESSION['addPokemon' ] == 'Pokemon añadido correctamente') {
     header("Location: ../php_views/pokemon.php");
     exit();
 }
+$pokedex = deletePokemon($pokedex,$_POST['txtNumero']);
+if($_SESSION['deletePokemon'] == 'El pokemon seleccionado se ha borrado de la pokedex') {
+    $indexOfPokemon = array_search($_POST['txtNumero'], array_column($pokedex, 'Numero'));
+    unlink("../media/".$pokemon[$indexOfPokemon]['Imatge']);
+    $_SESSION['pokedex'] = $pokedex;
+} else {
+    $_SESSION['deletePokemon'] == "No se ha borrado el pokemon.Problemas al borrar la imagen";
+}
+
+
+
+
