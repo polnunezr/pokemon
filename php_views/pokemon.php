@@ -8,9 +8,42 @@
         <title>Formulari Pokemon</title>
         <?php
         include '../bootstrap/index.php';
+        if(!isset($_SESSION)){
+            session_start();
+           }
+           if(isset([$_SESSION]['pokemon'])) {
+               $pokemon = [$_SESSION]['pokemon'];
+           } else {
+               $pokemon = [];
+           }
         ?>
     </head>
+    <?php
+    //Error message
+       if (isset($_SESSION["errormsg"])) {
+        $error = $_SESSION["errormsg"];
+        session_unset($_SESSION["errormsg"]);
+     } else {
+        $error = "";
+      }
+      // Message 
+      if (isset($_SESSION["msg"])) {
+        $message = $_SESSION["msg"];
+        session_unset($_SESSION["msg"]);
+     } else {
+        $message = "";
+      }  
+        if (isset($_SESSION["errormsg"])) {
 
+    ?>
+        <div class="alert alert-danger" role="alert">
+            <?php
+            $_SESSION['error'] = $error;
+            echo $error;
+            session_destroy();
+            
+            ?>
+        </div>
     <body>
         <div class="container-fluid" style="width: 45%;height:55%;margin-top:200px">
 
@@ -101,7 +134,7 @@
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-secondary text-end" href="\pokemon\index.php" role="button">Cancelar</a>
-                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                    <button type="submit" class="btn btn-primary" name = 'add'>Aceptar</button>
                     </div>
             </form>
             
