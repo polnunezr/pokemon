@@ -20,14 +20,14 @@
     //Error message
        if (isset($_SESSION["errormsg"])) {
         $error = $_SESSION["errormsg"];
-        session_unset($_SESSION["errormsg"]);
+        session_unset();
      } else {
         $error = "";
       }
       // Message 
       if (isset($_SESSION["msg"])) {
         $message = $_SESSION["msg"];
-        session_unset($_SESSION["msg"]);
+        session_unset();
      } else {
         $message = "";
       }  
@@ -53,7 +53,7 @@
         
     }
      ?>
-
+        </div>
        <div class="container-fluid">
             <div class="row row-cols-1 row-cols-md-5">
                 <?php 
@@ -67,37 +67,43 @@
                 <div class="col mt-2">
                     <div class="card" style="width: 18rem;">
                         <span class="border border-secondary">
-                            <img src="/pokemon/media/"<?php $pokemon['Imatge'] ."" ?> class="card-img-top">
+                            <img src="/pokemon/media/<?php echo $pokemon['Imatge']?>" class="card-img-top">
                             <div class="card-body">
-                                <h5 class="card-title"><?php $pokemon['Numero'] ."". $pokemon['Nombre']  ?></h5>
-                                <?php 
-                                    foreach($pokemon['Tipus'] as $tipo) {
+                                <h5 class="card-title"><?php echo $pokemon['Numero'] ."". $pokemon['Nom']."" ?></h5>
+                                <?php
+                                   foreach ($pokemon as $key => $valor) { 
+                                  if ($key == 'Tipus') {
+                                    foreach ($pokemon[$key] as  $valor1 => $valor2) {
+                                   
 
                                     
                                 ?>
-                                <span class="badge bg-warning text-dark"><?php $pokemon['Tipus'][$tipus] ?></span>
+                                <span class="badge bg-warning text-dark" ><?php echo  $valor2 . ""?></span>
                                 <?php 
                                 }
                                 }
+                            }
+                        }
                                 ?>
-                            </div>
-                            <footer class="card-footer  text-end">
+                                 <footer class="card-footer  text-end">
                                 <form action="../php_controllers/pokemonController.php" method="post">
-                                <button type="submit" class="btn btn-outline-danger" name='delete'><i class="fas fa-trash-alt"></i></button>
-                                <button type="submit" class="btn btn-outline-primary" name='edit'><i class="fas fa-edit"></i></button>
+                                <button type="submit" class="btn btn-outline-danger" name="delete"><i class="fas fa-trash-alt"></i></button>
+                                <button type="submit" class="btn btn-outline-primary" name="edit"><i class="fas fa-edit"></i></button>
                                 </form>
                             </footer>
+                            </div>
+                           
                         </span>
                     </div>
                 </div>
-                
+            </div>
+       </div>
 
             <div class="position-bottom position-fixed bottom-0 end-0 m-5" style="height:25px;width:2px;">
                 <a href="pokemon.php" type="button" class="btn bg-warning text-dark rounded"><i class="fas fa-plus"></i></a>
             </div>
 
 
-        </div>
 
 </body>
 

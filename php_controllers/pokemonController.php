@@ -1,8 +1,8 @@
 <?php
 include '../php_librarys/pokedex.php';
-if(!isset($_SESSION)){
+if (!isset($_SESSION)) {
     session_start();
-   }
+}
 if (isset($_SESSION['pokedex'])) {
     $pokedex = $_SESSION['pokedex'];
 } else {
@@ -10,7 +10,7 @@ if (isset($_SESSION['pokedex'])) {
 }
 //Ruta temporal de la imagen 
 
-if ($_POST['add']) {
+if (isset($_POST['add'])) {
     $rutaTemporal = $_FILES['imagen']['tmp_name'];
     if (isset($_FILES['imagen'])) {
         move_uploaded_file($rutaTemporal, $_FILES['imagen']['name']);
@@ -18,21 +18,24 @@ if ($_POST['add']) {
     //Creamos el pokemon
     $imagen = $_FILES['imagen']['name'];
     $pokemon = crearPokemon($_POST['txtNumero'], $_POST['txtNombre'], $_POST['region'], $_POST['tipoPokemon'], $_POST['altura'], $_POST['peso'], $_POST['rEvolucion'], $imagen);
+   // var_dump($pokemon);
     $pokedex = addPokemon($pokedex, $pokemon);
+    var_dump($pokedex);
     if ($_SESSION['addPokemon'] == 'Pokemon añadido correctamente') {
         move_uploaded_file($rutaTemporal, "../media/");
-        header('Location:' . '../php_views/pokemon_list.php');
-        exit();
+        $_SESSION['pokedex'] = $pokedex;
+        header('Location:' . '../php_views/pokemon_list.php', true, 302);
+        
     } else {
         $_SESSION['pokemon'] = $pokemon;
-        header('Location:' . '../php_views/pokemon.php');
-        exit();
+        header('Location: ' . '../php_views/pokemon.php', true, 302);
+        
     }
-} /*elseif ($_POST['edit']) {
-    $pokemon = modifyPokemon($pokedex,$_POST['txtNumero'],$_POST['txtNumero'], $_POST['txtNombre'], $_POST['region'], $_POST['tipoPokemon'], $_POST['altura'], $_POST['peso'], $_POST['rEvolucion'], $imagen);
+} elseif (isset($_POST['edit'])) {
+    $pokemon = modifyPokemon($pokedex, $_POST['txtNumero'], $_POST['txtNumero'], $_POST['txtNombre'], $_POST['region'], $_POST['tipoPokemon'], $_POST['altura'], $_POST['peso'], $_POST['rEvolucion'], $imagen);
     $_SESSION['pokemonModified'] = $pokemon;
-    header('Location:' . '../php_views/pokemon_edit.php');
-} elseif ($_POST['delete']) {
+    header('Location:' . '../php_views/pokemon_edit.php', true, 302);
+} elseif (isset($_POST['delete'])) {
     $pokedex = deletePokemon($pokedex, $_POST['txtNumero']);
     if ($_SESSION['deletePokemon'] == 'El pokemon seleccionado se ha borrado de la pokedex') {
         $indexOfPokemon = array_search($_POST['txtNumero'], array_column($pokedex, 'Numero'));
@@ -41,4 +44,4 @@ if ($_POST['add']) {
     } else {
         $_SESSION['deletePokemon'] == "No se ha borrado el pokemon.Problemas al borrar la imagen";
     }
-}*/
+}

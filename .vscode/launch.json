@@ -5,11 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Listen for Xdebug 2 (Legacy)",
+            "type": "php",
+            "request": "launch",
+            "port": 9000
+        },
+        
+        {
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080/pokemon/php_views/pokemon_list.php",
+            "url": "http://localhost:8080/pokemon/php_views/pokemon.php",
             "webRoot": "${workspaceFolder}"
         }
+
     ]
 }

@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html lang="en">
 
     <head>
@@ -11,25 +11,21 @@
         if(!isset($_SESSION)){
             session_start();
            }
-           if(isset([$_SESSION]['pokemon'])) {
-               $pokemon = [$_SESSION]['pokemon'];
-           } else {
-               $pokemon = [];
-           }
+         
         ?>
     </head>
     <?php
     //Error message
        if (isset($_SESSION["errormsg"])) {
         $error = $_SESSION["errormsg"];
-        session_unset($_SESSION["errormsg"]);
+        session_unset();
      } else {
         $error = "";
       }
       // Message 
       if (isset($_SESSION["msg"])) {
         $message = $_SESSION["msg"];
-        session_destroy();
+        session_unset();
      } else {
         $message = "";
       }  
@@ -50,7 +46,7 @@
             <form class="border border-dark justify-content-center" action="../php_controllers/pokemonController.php" method="POST" enctype="multipart/form-data">
                 <header class="card-header"><img src="../media/pokeball.png" height="20">Pokemon</header>
                 <div class="form-group row">
-                    <label for="txtNumero" class="col-sm-2 col-form-label">Número:</label>
+                    <label for="txtNumero" class="col-sm-2 col-form-label readonly ">Número:</label>
                     <div class="col-sm-10">
                         <input class="form-control w-75" type="text" name="txtNumero" id="txtNumero" maxlength="3" placeholder="Número del pokémon" autofocus required><br>
                     </div>
@@ -111,6 +107,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="form-group row">
                     <div class="col-sm-2">Evolución</div>
                     <div class="col-sm-10">
@@ -128,13 +125,12 @@
                     <label for="imagen" class="col-sm-2 col-form-label">Imagen</label>
                     <div class="col-sm-10">
                         <input  name="imagen" type="file" id="imagen" accept="image/png, image/jpeg">
-
                     </div>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-secondary text-end" href="\pokemon\index.php" role="button">Cancelar</a>
                     <button type="submit" class="btn btn-primary" name = 'add'>Aceptar</button>
-                </div>
+                    </div>
             </form>
             
         </div>

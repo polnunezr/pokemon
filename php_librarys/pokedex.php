@@ -30,7 +30,7 @@ function addPokemon(&$pokedex, $pokemon)
     }
     if (!$pokemonExist) {
         array_push($pokedex, $pokemon);
-        $_SESSION['addPokemon'] = 'Pokemon añadido correctamente' .'<br>';
+        $_SESSION['addPokemon'] = 'Pokemon añadido correctamente' ;
     }
 
     return $pokedex;
@@ -91,10 +91,10 @@ function deletePokemon(&$pokedex, $numero)
 {
     $indexOfPokemon = array_search($numero, array_column($pokedex, 'Numero'));
     if ($indexOfPokemon === false) {
-        $_SESSION['deletePokemon'] = 'El pokemon seleccionado no se encuentra en la pokedex' .'<br>';
+        $_SESSION['deletePokemon'] = 'El pokemon seleccionado no se encuentra en la pokedex';
     } else {
         unset($pokedex[$indexOfPokemon]);
-        $_SESSION['deletePokemon'] = 'El pokemon seleccionado se ha borrado de la pokedex' .'<br>';
+        $_SESSION['deletePokemon'] = 'El pokemon seleccionado se ha borrado de la pokedex';
         $pokedex = array_values($pokedex);
     }
     return $pokedex;
