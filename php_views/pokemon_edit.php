@@ -13,19 +13,21 @@
            }
          
         ?>
+        
     </head>
     <?php
     //Error message
        if (isset($_SESSION["errormsg"])) {
         $error = $_SESSION["errormsg"];
-        session_unset();
+        unset($_SESSION['errormsg']);
+
      } else {
         $error = "";
       }
       // Message 
       if (isset($_SESSION["msg"])) {
         $message = $_SESSION["msg"];
-        session_unset();
+        unset($_SESSION['msg']);
      } else {
         $message = "";
       }  
@@ -42,19 +44,28 @@
         </div>
     <body>
         <div class="container-fluid" style="width: 45%;height:55%;margin-top:200px">
-
+       
             <form class="border border-dark justify-content-center" action="../php_controllers/pokemonController.php" method="POST" enctype="multipart/form-data">
-                <header class="card-header"><img src="../media/pokeball.png" height="20">Pokemon</header>
+            <?php 
+                     if (isset($_SESSION['pokemon'])) {
+                        $pokemons = $_SESSION['pokemon'];
+                    } else {
+                        $pokemons = [];
+                    }
+                    foreach($pokemons as $pokemon) {
+            ?>    
+            <header class="card-header"><img src="../media/pokeball.png" height="20">Pokemon</header>
                 <div class="form-group row">
-                    <label for="txtNumero" class="col-sm-2 col-form-label readonly ">Número:</label>
+                    <label for="txtNumero" class="col-sm-2 col-form-label readonly ">Número: <?php echo $pokemon['Numero']?></label>
                     <div class="col-sm-10">
-                        <input class="form-control w-75" type="text" name="txtNumero" id="txtNumero" maxlength="3" placeholder="Número del pokémon" autofocus required><br>
-                    </div>
+
+                        <input class="form-control w-75" type="text" name="txtNumero" id="txtNumero" maxlength="3" placeholder="Número del pokémon"  value="" autofocus required>                    </div>
                 </div>
                 <div class="form-group row">
                     <label for="txtNombre" class="col-sm-2 col-form-label">Nombre</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control w-75" name="txtNombre" id="txtNombre" placeholder="Nombre del pokémon" required>
+                        <?php echo $pokemon['Nom']?>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -94,6 +105,7 @@
                         <div class="input-group mb-3">
                             <label for="peso" class="col-sm-2 col-form-label">Altura</label>
                             <input type="number" class="form-control w-50" name="altura" id="altura" min="1" style="margin-left: 4%;">
+                            <?php echo $pokemon['altura']?>
                             <span class="input-group-text" style="margin-right:5%">cm</span>
                         </div>
                     </div>
@@ -103,6 +115,7 @@
                         <div class="input-group mb-3">
                             <label for="peso" class="col-sm-2 col-form-label">Peso</label>
                             <input type="number" class="form-control w-50" min="0" step=".01" name="peso" id="peso" style="margin-left: 4%;">
+                            <?php echo $pokemon['peso']?>
                             <span class="input-group-text" style="margin-right:5%">KG</span>
                         </div>
                     </div>
@@ -124,13 +137,14 @@
                 <div class="form-group row">
                     <label for="imagen" class="col-sm-2 col-form-label">Imagen</label>
                     <div class="col-sm-10">
-                        <input  name="imagen" type="file" id="imagen" accept="image/png, image/jpeg">
+                        <input  name="imagen" type="file" id="imagen" accept="image/png, image/jpeg" value="<?php echo $pokemon['Imatge']?>">
                     </div>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-secondary text-end" href="\pokemon\index.php" role="button">Cancelar</a>
                     <button type="submit" class="btn btn-primary" name = 'add'>Aceptar</button>
                     </div>
+                    <?php } ?>
             </form>
             
         </div>

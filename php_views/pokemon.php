@@ -12,7 +12,7 @@
             session_start();
            }
            if(isset([$_SESSION]['pokemon'])) {
-               $pokemon = [$_SESSION]['pokemon'];
+               $pokemon = $_SESSION['pokemon'];
            } else {
                $pokemon = [];
            }

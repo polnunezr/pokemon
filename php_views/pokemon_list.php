@@ -20,14 +20,14 @@
     //Error message
        if (isset($_SESSION["errormsg"])) {
         $error = $_SESSION["errormsg"];
-        session_unset();
+        unset($_SESSION['errormsg']);
      } else {
         $error = "";
       }
       // Message 
       if (isset($_SESSION["msg"])) {
         $message = $_SESSION["msg"];
-        session_unset();
+        unset($_SESSION['msg']);
      } else {
         $message = "";
       }  
@@ -59,6 +59,7 @@
                 <?php 
                      if (isset($_SESSION['pokedex'])) {
                         $pokedex = $_SESSION['pokedex'];
+                        var_dump($pokedex);
                     } else {
                         $pokedex = [];
                     }
@@ -79,18 +80,19 @@
                                     
                                 ?>
                                 <span class="badge bg-warning text-dark" ><?php echo  $valor2 . ""?></span>
+                                <footer class="card-footer  text-end">
+                                <form action="../php_controllers/pokemonController.php" method="post">
+                                <button type="submit" class="btn btn-outline-danger" name="delete" value="<?php echo $pokemon['Numero'] ?>"><i class="fas fa-trash-alt"></i></button>
+                                <button type="submit" class="btn btn-outline-primary" name="edit"><i class="fas fa-edit"></i></button>
+                                </form>
+                            </footer>
                                 <?php 
                                 }
                                 }
                             }
                         }
                                 ?>
-                                 <footer class="card-footer  text-end">
-                                <form action="../php_controllers/pokemonController.php" method="post">
-                                <button type="submit" class="btn btn-outline-danger" name="delete"><i class="fas fa-trash-alt"></i></button>
-                                <button type="submit" class="btn btn-outline-primary" name="edit"><i class="fas fa-edit"></i></button>
-                                </form>
-                            </footer>
+                               
                             </div>
                            
                         </span>
