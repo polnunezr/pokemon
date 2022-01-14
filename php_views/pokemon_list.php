@@ -9,28 +9,18 @@
     <?php
     include '../bootstrap/index.php';
     include '../php_partials/menu.php';
-    if(!isset($_SESSION)){
-        session_start();
-       }
-    ?>
+   session_start();
+   ?>
 </head>
 
 <body>
     <?php
     //Error message
-       if (isset($_SESSION["errormsg"])) {
+    if (isset($_SESSION["errormsg"])) {
         $error = $_SESSION["errormsg"];
-        session_unset();
-     } else {
-        $error = "";
-      }
-      // Message 
-      if (isset($_SESSION["msg"])) {
+     } else if(isset($_SESSION["msg"])) {
         $message = $_SESSION["msg"];
-        session_unset();
-     } else {
-        $message = "";
-      }  
+     }
         if (isset($_SESSION["errormsg"])) {
 
     ?>
@@ -38,7 +28,7 @@
             <?php
             $_SESSION['error'] = $error;
             echo $error;
-            session_destroy();
+            unset($_SESSION['error']);
 
             ?>
         </div>
@@ -50,18 +40,18 @@
         <?php
         $_SESSION['msg'] = $message;
         echo $message;
-        
+        unset($_SESSION['msg']);
     }
+        if (isset($_SESSION['pokedex'])) {
+            $pokedex = $_SESSION['pokedex'];
+        } else {
+            $pokedex = [];
+        }
      ?>
         </div>
        <div class="container-fluid">
             <div class="row row-cols-1 row-cols-md-5">
                 <?php 
-                     if (isset($_SESSION['pokedex'])) {
-                        $pokedex = $_SESSION['pokedex'];
-                    } else {
-                        $pokedex = [];
-                    }
                     foreach($pokedex as $pokemon) {
                    ?>
                 <div class="col mt-2">
@@ -69,32 +59,34 @@
                         <span class="border border-secondary">
                             <img src="/pokemon/media/<?php echo $pokemon['Imatge']?>" class="card-img-top">
                             <div class="card-body">
-                                <h5 class="card-title"><?php echo $pokemon['Numero'] ."". $pokemon['Nom']."" ?></h5>
+                                <h5 class="card-title"><?php echo $pokemon['Numero'] ." ". $pokemon['Nom']."" ?></h5>
                                 <?php
                                    foreach ($pokemon as $key => $valor) { 
                                   if ($key == 'Tipus') {
-                                    foreach ($pokemon[$key] as  $valor1 => $valor2) {
-                                   
-
-                                    
+                                    foreach ($pokemon[$key] as  $valor1 => $valor2) {  
                                 ?>
-                                <span class="badge bg-warning text-dark" ><?php echo  $valor2 . ""?></span>
+                                <span class="badge bg-warning text-dark" ><?php echo  $valor2 ?></span>
                                 <?php 
                                 }
                                 }
                             }
-                        }
-                                ?>
-                                 <footer class="card-footer  text-end">
+                            ?>
+                                    
+                                <footer class="card-footer  text-end">
                                 <form action="../php_controllers/pokemonController.php" method="post">
-                                <button type="submit" class="btn btn-outline-danger" name="delete"><i class="fas fa-trash-alt"></i></button>
-                                <button type="submit" class="btn btn-outline-primary" name="edit"><i class="fas fa-edit"></i></button>
+                                <button type="submit" class="btn btn-outline-danger" name="delete" value="<?php echo $pokemon['Numero'] ?> "><i class="fas fa-trash-alt"></i></button>
+                                <button type="submit" class="btn btn-outline-primary" name="edit" value="<?php echo $pokemon['Numero'] ?>"><i class="fas fa-edit"></i></button>
                                 </form>
                             </footer>
                             </div>
-                           
-                        </span>
+                            </span>
                     </div>
+                            <?php
+                        }
+                                ?>
+                            
+                           
+                     
                 </div>
             </div>
        </div>

@@ -1,45 +1,41 @@
 <!DOCTYPE html>
-    <html lang="en">
+<html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Formulari Pokemon</title>
-        <?php
-        include '../bootstrap/index.php';
-        if(!isset($_SESSION)){
-            session_start();
-           }
-         
-        ?>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulari Pokemon</title>
     <?php
-    //Error message
-       if (isset($_SESSION["errormsg"])) {
-        $error = $_SESSION["errormsg"];
-        session_unset();
-     } else {
-        $error = "";
-      }
-      // Message 
-      if (isset($_SESSION["msg"])) {
-        $message = $_SESSION["msg"];
-        session_unset();
-     } else {
-        $message = "";
-      }  
-        if (isset($_SESSION["errormsg"])) {
-
+    include '../bootstrap/index.php';
     ?>
-        <div class="alert alert-danger" role="alert">
-            <?php
-            $_SESSION['error'] = $error;
-            echo $error;
-            session_destroy();
-        }
-            ?>
-        </div>
+</head>
+<?php
+//Error message
+if (isset($_SESSION["errormsg"])) {
+    $error = $_SESSION["errormsg"];
+} elseif (isset($_SESSION["msg"])) {
+    $message = $_SESSION["msg"];
+    unset($_SESSION['msg']);
+}
+// Message 
+
+if (isset($_SESSION["errormsg"])) {
+
+?>
+    <div class="alert alert-danger" role="alert">
+    <?php
+    $_SESSION['error'] = $error;
+    echo $error;
+    unset($_SESSION['error']);
+}
+session_start();
+if (isset($_SESSION['pokedex'])) {
+    $pokedex = $_SESSION['pokedex'];
+}
+    ?>
+    </div>
+
     <body>
         <div class="container-fluid" style="width: 45%;height:55%;margin-top:200px">
 
@@ -48,7 +44,7 @@
                 <div class="form-group row">
                     <label for="txtNumero" class="col-sm-2 col-form-label readonly ">Número:</label>
                     <div class="col-sm-10">
-                        <input class="form-control w-75" type="text" name="txtNumero" id="txtNumero" maxlength="3" placeholder="Número del pokémon" autofocus required><br>
+                        <input class="form-control w-75" type="text" name="txtNumero" id="txtNumero" maxlength="3" placeholder="" disabled autofocus required><br>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -124,16 +120,16 @@
                 <div class="form-group row">
                     <label for="imagen" class="col-sm-2 col-form-label">Imagen</label>
                     <div class="col-sm-10">
-                        <input  name="imagen" type="file" id="imagen" accept="image/png, image/jpeg">
+                        <input name="imagen" type="file" id="imagen" accept="image/png, image/jpeg">
                     </div>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-secondary text-end" href="\pokemon\index.php" role="button">Cancelar</a>
-                    <button type="submit" class="btn btn-primary" name = 'add'>Aceptar</button>
-                    </div>
+                    <button type="submit" class="btn btn-primary" name='add'>Aceptar</button>
+                </div>
             </form>
-            
+
         </div>
     </body>
 
-    </html>
+</html>

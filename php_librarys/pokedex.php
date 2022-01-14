@@ -1,6 +1,10 @@
 <?php
 session_start();
-
+if (isset($_SESSION['pokedex'])) {
+    $pokedex = $_SESSION['pokedex'];
+} else {
+    $pokedex = [];
+}
 function crearPokemon($numero, $nom, $regio, $tipus, $alcada, $pes, $evolucio, $imatge)
 {
     $pokemon = array(
