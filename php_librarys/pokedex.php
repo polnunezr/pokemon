@@ -1,14 +1,19 @@
 <?php
+<<<<<<< HEAD
 session_start();
 if (isset($_SESSION['pokedex'])) {
     $pokedex = $_SESSION['pokedex'];
 } else {
     $pokedex = [];
 }
+=======
+
+  
+>>>>>>> 898f7834d4b3b9cef4838fcad9f1dfa2068ca990
 function crearPokemon($numero, $nom, $regio, $tipus, $alcada, $pes, $evolucio, $imatge)
 {
-    $pokemon = array(
-        /*$numero,$nom,$regio,$tipus,$alcada,$pes,$evolucio,$imatge*/
+    
+    $pokemon = [
         'Numero' => $numero,
         'Nom' => $nom,
         'Regió' => $regio,
@@ -17,24 +22,28 @@ function crearPokemon($numero, $nom, $regio, $tipus, $alcada, $pes, $evolucio, $
         'Pes' => $pes,
         'Evolució' => $evolucio,
         'Imatge' => $imatge
-    );
+    ];
     return $pokemon;
+   
 }
 
 function addPokemon(&$pokedex, $pokemon)
 {
+    
     $i = 0;
     $pokemonExist = false;
-    while (!$pokemonExist  && $i < count($pokedex)) {
+    while ($pokemonExist == false && $i < count($pokedex)) {
         if ($pokedex[$i]['Numero'] == $pokemon['Numero']) {
             $pokemonExist = true;
             $_SESSION['addPokemon'] = 'Error, el pokemon ya existe';
+
         }
         $i++;
     }
-    if (!$pokemonExist) {
-        array_push($pokedex, $pokemon);
+    if ($pokemonExist == false) {
+        array_push($pokedex,$pokemon);
         $_SESSION['addPokemon'] = 'Pokemon añadido correctamente' ;
+       
     }
 
     return $pokedex;

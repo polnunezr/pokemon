@@ -38,11 +38,19 @@ if (isset($_SESSION['pokedex'])) {
 
     <body>
         <div class="container-fluid" style="width: 45%;height:55%;margin-top:200px">
-
+       
             <form class="border border-dark justify-content-center" action="../php_controllers/pokemonController.php" method="POST" enctype="multipart/form-data">
-                <header class="card-header"><img src="../media/pokeball.png" height="20">Pokemon</header>
+            <?php 
+                     if (isset($_SESSION['pokemon'])) {
+                        $pokemons = $_SESSION['pokemon'];
+                    } else {
+                        $pokemons = [];
+                    }
+                    foreach($pokemons as $pokemon) {
+            ?>    
+            <header class="card-header"><img src="../media/pokeball.png" height="20">Pokemon</header>
                 <div class="form-group row">
-                    <label for="txtNumero" class="col-sm-2 col-form-label readonly ">Número:</label>
+                    <label for="txtNumero" class="col-sm-2 col-form-label readonly ">Número: <?php echo $pokemon['Numero']?></label>
                     <div class="col-sm-10">
                         <input class="form-control w-75" type="text" name="txtNumero" id="txtNumero" maxlength="3" placeholder="" disabled autofocus required><br>
                     </div>
@@ -51,6 +59,7 @@ if (isset($_SESSION['pokedex'])) {
                     <label for="txtNombre" class="col-sm-2 col-form-label">Nombre</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control w-75" name="txtNombre" id="txtNombre" placeholder="Nombre del pokémon" required>
+                        <?php echo $pokemon['Nom']?>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -90,6 +99,7 @@ if (isset($_SESSION['pokedex'])) {
                         <div class="input-group mb-3">
                             <label for="peso" class="col-sm-2 col-form-label">Altura</label>
                             <input type="number" class="form-control w-50" name="altura" id="altura" min="1" style="margin-left: 4%;">
+                            <?php echo $pokemon['altura']?>
                             <span class="input-group-text" style="margin-right:5%">cm</span>
                         </div>
                     </div>
@@ -99,6 +109,7 @@ if (isset($_SESSION['pokedex'])) {
                         <div class="input-group mb-3">
                             <label for="peso" class="col-sm-2 col-form-label">Peso</label>
                             <input type="number" class="form-control w-50" min="0" step=".01" name="peso" id="peso" style="margin-left: 4%;">
+                            <?php echo $pokemon['peso']?>
                             <span class="input-group-text" style="margin-right:5%">KG</span>
                         </div>
                     </div>
