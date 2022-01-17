@@ -15,7 +15,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "http://localhost:80/pokemon/php_views/pokemon.php",
+            "url": "http://localhost:8080/pokemon/php_views/pokemon.php",
             "webRoot": "${workspaceFolder}"
         }
 

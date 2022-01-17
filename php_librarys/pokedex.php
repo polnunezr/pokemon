@@ -51,7 +51,7 @@ function findPokemon(&$pokedex, $numero)
     while ($foundPokemon == false && $i < count($pokedex)) {
         if ($pokedex[$i]['Numero'] === $numero) {
             echo 'El pokemon con el codigo ' . $numero . ' se encuentra en la posicion ' . $i . '<br>';
-            $_SESSION['pokemonModified'] = $pokedex[$i];
+            $pokemonToShow = $pokedex[$i];
             $foundPokemon = true;
         }
         $i++;
@@ -59,6 +59,7 @@ function findPokemon(&$pokedex, $numero)
     if (!$foundPokemon) {
         return -1 .'<br>';
     }
+    return $pokemonToShow;
 }
 
 function mostrarPokemon($pokemon)

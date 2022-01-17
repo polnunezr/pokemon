@@ -74,11 +74,11 @@
                                     
                                 <footer class="card-footer  text-end">
                                 <form action="../php_controllers/pokemonController.php" method="post">
-                                <button type="submit" class="btn btn-outline-danger" name="delete"i class="fas fa-trash-alt"></i>
-                                <input type="hidden" name="delete" value="<?php echo $pokemon['Numero'] ?>"></button>
+                                <button type="submit" class="btn btn-outline-danger" name="delete" value="<?php echo $pokemon['Numero'] ?>"> <i class="fas fa-trash-alt"></i>
+                                <!--<input type="hidden" name="delete" value="<?php echo $pokemon['Numero'] ?>">--></button>
 
-                                <button type="submit" class="btn btn-outline-primary" name="edit"><i class="fas fa-edit"></i>
-                                <input type="hidden" name="edit" value="<?php echo $pokemon['Numero'] ?>"></button></button>
+                                <button type="submit" class="btn btn-outline-primary" name="editPokemon" value="<?php echo $pokemon['Numero'] ?>"><i class="fas fa-edit"></i>
+                               <!-- <input type="hidden" name="editPokemon" value="<?php echo $pokemon['Numero'] ?>">--></button>
                                 </form>
                             </footer>
                             </div>
