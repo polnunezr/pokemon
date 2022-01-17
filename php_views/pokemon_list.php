@@ -26,16 +26,16 @@
     ?>
         <div class="alert alert-danger" role="alert">
             <?php
-            $_SESSION['error'] = $error;
+            $_SESSION['errormsg'] = $error;
             echo $error;
-            unset($_SESSION['error']);
+            unset($_SESSION['errormsg']);
 
             ?>
         </div>
 
     
     <?php
-    } else { ?>
+    } elseif (isset($_SESSION["msg"])) { ?>
         <div class="alert alert-success" role="alert">
         <?php
         $_SESSION['msg'] = $message;
@@ -74,8 +74,11 @@
                                     
                                 <footer class="card-footer  text-end">
                                 <form action="../php_controllers/pokemonController.php" method="post">
-                                <button type="submit" class="btn btn-outline-danger" name="delete" value="<?php echo $pokemon['Numero'] ?> "><i class="fas fa-trash-alt"></i></button>
-                                <button type="submit" class="btn btn-outline-primary" name="edit" value="<?php echo $pokemon['Numero'] ?>"><i class="fas fa-edit"></i></button>
+                                <button type="submit" class="btn btn-outline-danger" name="delete"i class="fas fa-trash-alt"></i>
+                                <input type="hidden" name="delete" value="<?php echo $pokemon['Numero'] ?>"></button>
+
+                                <button type="submit" class="btn btn-outline-primary" name="edit"><i class="fas fa-edit"></i>
+                                <input type="hidden" name="edit" value="<?php echo $pokemon['Numero'] ?>"></button></button>
                                 </form>
                             </footer>
                             </div>

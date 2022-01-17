@@ -1,15 +1,10 @@
 <?php
-<<<<<<< HEAD
 session_start();
 if (isset($_SESSION['pokedex'])) {
     $pokedex = $_SESSION['pokedex'];
 } else {
     $pokedex = [];
 }
-=======
-
-  
->>>>>>> 898f7834d4b3b9cef4838fcad9f1dfa2068ca990
 function crearPokemon($numero, $nom, $regio, $tipus, $alcada, $pes, $evolucio, $imatge)
 {
     
@@ -56,12 +51,13 @@ function findPokemon(&$pokedex, $numero)
     while ($foundPokemon == false && $i < count($pokedex)) {
         if ($pokedex[$i]['Numero'] === $numero) {
             echo 'El pokemon con el codigo ' . $numero . ' se encuentra en la posicion ' . $i . '<br>';
+            $_SESSION['pokemonModified'] = $pokedex[$i];
             $foundPokemon = true;
         }
         $i++;
     }
     if (!$foundPokemon) {
-        echo -1 .'<br>';
+        return -1 .'<br>';
     }
 }
 
