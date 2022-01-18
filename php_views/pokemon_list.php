@@ -9,7 +9,17 @@
     <?php
     include '../bootstrap/index.php';
     include '../php_partials/menu.php';
+    include '../php_librarys/bd.php';
    session_start();
+    // Funciones que funcionan
+        /*
+        --selectAllPokemons()
+        --selectAllTypes()
+        --selectAllRegions()
+        --selectPokemon("001")
+        --selectTypesPokemon("001")      
+         */
+  
    ?>
 </head>
 
@@ -57,12 +67,12 @@
                 <div class="col mt-2">
                     <div class="card" style="width: 18rem;">
                         <span class="border border-secondary">
-                            <img src="/pokemon/media/<?php echo $pokemon['Imatge']?>" class="card-img-top">
+                            <img src="/pokemon/media/<?php echo $pokemon['imagen']?>" class="card-img-top">
                             <div class="card-body">
-                                <h5 class="card-title"><?php echo $pokemon['Numero'] ." ". $pokemon['Nom']."" ?></h5>
+                                <h5 class="card-title"><?php echo $pokemon['numero'] ." ". $pokemon['nombre']."" ?></h5>
                                 <?php
                                    foreach ($pokemon as $key => $valor) { 
-                                  if ($key == 'Tipus') {
+                                  if ($key == '') {
                                     foreach ($pokemon[$key] as  $valor1 => $valor2) {  
                                 ?>
                                 <span class="badge bg-warning text-dark" ><?php echo  $valor2 ?></span>
@@ -74,11 +84,11 @@
                                     
                                 <footer class="card-footer  text-end">
                                 <form action="../php_controllers/pokemonController.php" method="post">
-                                <button type="submit" class="btn btn-outline-danger" name="delete" value="<?php echo $pokemon['Numero'] ?>"> <i class="fas fa-trash-alt"></i>
-                                <!--<input type="hidden" name="delete" value="<?php echo $pokemon['Numero'] ?>">--></button>
+                                <button type="submit" class="btn btn-outline-danger" name="delete" value="<?php echo $pokemon['numero'] ?>"> <i class="fas fa-trash-alt"></i>
+                                <!--<input type="hidden" name="delete" value="<?php echo $pokemon['numero'] ?>">--></button>
 
-                                <button type="submit" class="btn btn-outline-primary" name="editPokemon" value="<?php echo $pokemon['Numero'] ?>"><i class="fas fa-edit"></i>
-                               <!-- <input type="hidden" name="editPokemon" value="<?php echo $pokemon['Numero'] ?>">--></button>
+                                <button type="submit" class="btn btn-outline-primary" name="editPokemon" value="<?php echo $pokemon['numero'] ?>"><i class="fas fa-edit"></i>
+                               <!-- <input type="hidden" name="editPokemon" value="<?php echo $pokemon['numero'] ?>">--></button>
                                 </form>
                             </footer>
                             </div>

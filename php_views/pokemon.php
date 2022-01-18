@@ -45,11 +45,11 @@
                     <label for="region" class="col-sm-2 col-form-label">Región</label>
                     <div class="col-sm-10">
                         <select name="region" id="region" class="form-control w-75">
-                            <option value="kanto">Kanto</option>
-                            <option value="johto">Johto</option>
-                            <option value="hoenn">Hoenn</option>
-                            <option value="sinnoh">Sinnoh</option>
-                            <option value="teselia">Teselia</option>
+                            <option value="Kanto">Kanto</option>
+                            <option value="Johto">Johto</option>
+                            <option value="Hoenn">Hoenn</option>
+                            <option value="Sinnoh">Sinnoh</option>
+                            <option value="Teselia">Teselia</option>
                         </select>
                     </div>
                 </div>

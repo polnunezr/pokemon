@@ -1,5 +1,6 @@
 <?php
 include '../php_librarys/pokedex.php';
+include '../php_librarys/bd.php';
 if(!isset($_SESSION)){
     session_start();
    }
@@ -13,7 +14,7 @@ if (isset($_POST['add'])) {
     }
     //Creamos el pokemon
     $imagen = $_FILES['imagen']['name'];
-    $pokemon = crearPokemon($_POST['txtNumero'], $_POST['txtNombre'], $_POST['region'], $_POST['tipoPokemon'], $_POST['altura'], $_POST['peso'], $_POST['rEvolucion'], $imagen);
+    $pokemon = insertPokemon($_POST['txtNumero'], $_POST['txtNombre'],  $_POST['tipoPokemon'],$_POST['altura'], $_POST['peso'], $_POST['rEvolucion'],  $imagen ,$_POST['region']);
     $pokedex = addPokemon($pokedex, $pokemon);
     if ($_SESSION['addPokemon'] == 'Pokemon añadido correctamente') {
         move_uploaded_file($rutaTemporal, "../media/");
