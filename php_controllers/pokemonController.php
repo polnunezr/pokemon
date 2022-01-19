@@ -14,7 +14,8 @@ if (isset($_POST['add'])) {
     }
     //Creamos el pokemon
     $imagen = $_FILES['imagen']['name'];
-    $pokemon = insertPokemon($_POST['txtNumero'], $_POST['txtNombre'],  $_POST['tipoPokemon'],$_POST['altura'], $_POST['peso'], $_POST['rEvolucion'],  $imagen ,$_POST['region']);
+    insertPokemon($_POST['txtNumero'], $_POST['txtNombre'],  $_POST['tipoPokemon'],$_POST['altura'], $_POST['peso'], $_POST['rEvolucion'],  $imagen ,$_POST['region']);
+    $pokemon = selectPokemon($_POST['txtNumero']);
     $pokedex = addPokemon($pokedex, $pokemon);
     if ($_SESSION['addPokemon'] == 'Pokemon añadido correctamente') {
         move_uploaded_file($rutaTemporal, "../media/");
