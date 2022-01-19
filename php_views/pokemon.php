@@ -59,16 +59,16 @@
                     <div class="col-sm-10">
                         <div class="form-check">
                             <label for="tipo" class="form-check-label">
-                                <input type="checkbox" name="tipoPokemon[]" id="planta" value="planta">Planta
-                                <input type="checkbox" name="tipoPokemon[]" id="veneno" value="veneno">Veneno
-                                <input type="checkbox" name="tipoPokemon[]" id="fuego" value="fuego">Fuego
-                                <input type="checkbox" name="tipoPokemon[]" id="volador" value="volador">Volador
-                                <input type="checkbox" name="tipoPokemon[]" id="agua" value="agua">Agua
-                                <input type="checkbox" name="tipoPokemon[]" id="electrico" value="electrico">Eléctrico
-                                <input type="checkbox" name="tipoPokemon[]" id="hada" value="hada">Hada
-                                <input type="checkbox" name="tipoPokemon[]" id="bicho" value="bicho">Bicho
-                                <input type="checkbox" name="tipoPokemon[]" id="lucha" value="lucha">Lucha
-                                <input type="checkbox" name="tipoPokemon[]" id="psiquico" value="psiqiuco">Psíquico <br>
+                                <input type="checkbox" name="tipoPokemon[]" id="Planta" value="Planta">Planta
+                                <input type="checkbox" name="tipoPokemon[]" id="eneno" value="Veneno">Veneno
+                                <input type="checkbox" name="tipoPokemon[]" id="fuego" value="Fuego">Fuego
+                                <input type="checkbox" name="tipoPokemon[]" id="volador" value="Volador">Volador
+                                <input type="checkbox" name="tipoPokemon[]" id="agua" value="Agua">Agua
+                                <input type="checkbox" name="tipoPokemon[]" id="electrico" value="Electrico">Eléctrico
+                                <input type="checkbox" name="tipoPokemon[]" id="hada" value="Hada">Hada
+                                <input type="checkbox" name="tipoPokemon[]" id="bicho" value="Bicho">Bicho
+                                <input type="checkbox" name="tipoPokemon[]" id="lucha" value="Lucha">Lucha
+                                <input type="checkbox" name="tipoPokemon[]" id="psiquico" value="Psiqiuco">Psíquico <br>
                             </label>
                         </div>
                     </div>
@@ -95,11 +95,11 @@
                     <div class="col-sm-2">Evolución</div>
                     <div class="col-sm-10">
 
-                        <input type="radio" class="form-check-input" name="rEvolucion" id="rbSinEvolucionar" value="rbSinEvolucionar">
+                        <input type="radio" class="form-check-input" name="rEvolucion" id="rbSinEvolucionar" value="Sin Evolucionar">
                         <label for="rbSinEvolucionar" class="form-check-label">Sin Evolucionar</label>
-                        <input type="radio" class="form-check-input" name="rEvolucion" id="rbPrimeraEvolucion" value="rbPrimeraEvolucion">
+                        <input type="radio" class="form-check-input" name="rEvolucion" id="rbPrimeraEvolucion" value="Primera Evolucion">
                         <label for="rbPrimeraEvolucion" class="form-check-label">Primera evolución</label>
-                        <input type="radio" class="form-check-input" name="rEvolucion" id="rbSegundaEvolucion" value="rbSegundaEvolucion">
+                        <input type="radio" class="form-check-input" name="rEvolucion" id="rbSegundaEvolucion" value="Segunda Evolucion">
                         <label for="rbSegundaEvolucion" class="form-check-label">Segunda evolución</label>
                     </div>
                 </div>

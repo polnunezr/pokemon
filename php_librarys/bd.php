@@ -68,6 +68,7 @@ function selectAllRegions() {
     return $resultado2;
  }
  function insertPokemon($numero,$nombre,$tipos,$altura,$peso,$evolucion,$imatge,$region) {
+    try {
    $typesPokemons = selectAllTypes();
    $conexion = openBD();
    $conexion->beginTransaction();
@@ -75,28 +76,33 @@ function selectAllRegions() {
    $sentencia = $conexion->prepare($setenciaText);
    $sentencia->execute();
    $resultado = $sentencia->fetchAll();
-   $id = $resultado[0]["max(id)"];
-   $id++;
-   $setenciaText2 = "select id from regiones where nombre =".$region;
+   $id3 = $resultado[0]["max(id)"];
+   $id3++;
+   $setenciaText2 = "select id from regiones where nombre ="."'$region'";
    $sentencia2 = $conexion->prepare($setenciaText2);
    $sentencia2->execute();
    $resultado2 = $sentencia2->fetchAll();
    $idRegion = $resultado2[0]["id"];
-   $conexion -> query("insert into pokemons values($id,$numero,$altura,$peso,$evolucion,$imatge,$idRegion);");
+   $conexion->query("INSERT INTO pokemons values($id3,'$numero','$nombre',$altura,$peso,'$evolucion','$imatge',$idRegion)") ;
    $i = 0;
-   $j = 0;
+   $k=0;
    while($i < count($typesPokemons)) {
-      while($j < count($tipos)) {
-      if($typesPokemons[$i]['nombre'] == $tipos[$j] ) {
-      $conexion -> query("insert into tipos_has_pokemons values($typesPokemons[$i]['id'],$id)");
+      while($k < count($tipos)) {
+      if($typesPokemons[$i]['nombre'] == $tipos[$k] ) {
+      $idTipo = $typesPokemons[$i]['id'];
+      $conexion->query("INSERT INTO tipos_has_pokemons values($idTipo,$id3)");
+      $k++;
       }
-      $j++;
+      $i++;
    }
-   $i++;
-}
-   
-   $conexion ->commit();
+   $conexion->commit();
    $conexion = closeBd();
+
+}
+    } catch(PDOException $ex){
+       echo $ex;
+    }
+
 }
 
 
