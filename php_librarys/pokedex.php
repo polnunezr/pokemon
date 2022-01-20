@@ -1,9 +1,13 @@
 <?php
-session_start();
+if(!isset($_SESSION)){
+    session_start();
+   }
+include '../php_librarys/bd.php';
+
 if (isset($_SESSION['pokedex'])) {
     $pokedex = $_SESSION['pokedex'];
 } else {
-    $pokedex = [];
+    $pokedex = selectAllPokemons();
 }
 function crearPokemon($numero, $nom, $regio, $tipus, $alcada, $pes, $evolucio, $imatge)
 {

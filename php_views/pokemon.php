@@ -20,10 +20,26 @@
         ?>
     </head>
     <?php
-    
+    if (isset($_SESSION["errormsg"])) {
+        $error = $_SESSION["errormsg"];
+     } else if(isset($_SESSION["msg"])) {
+        $message = $_SESSION["msg"];
+     }
+        if (isset($_SESSION["errormsg"])) {
 
     ?>
+        <div class="alert alert-danger" role="alert">
+            <?php
+            $_SESSION['errormsg'] = $error;
+            echo $error;
+            unset($_SESSION['errormsg']);
+        }
+
+            ?>
         </div>
+
+   
+
     <body>
         <div class="container-fluid" style="width: 45%;height:55%;margin-top:200px">
 

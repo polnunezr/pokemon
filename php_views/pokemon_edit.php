@@ -42,7 +42,7 @@ if (isset($_SESSION["errormsg"])) {
                      if (isset($_SESSION['pokemonModified'])) {
                         $pokemons = $_SESSION['pokemonModified'];
                     } else {
-                        $pokemons = [];
+                        $pokemons = selectPokemon($_POST['editPokemon']);
                     }
                   
             ?>  
@@ -52,7 +52,7 @@ if (isset($_SESSION["errormsg"])) {
                 <div class="form-group row">
                     <label for="txtNumero" class="col-sm-2 col-form-label readonly ">Número: </label>
                     <div class="col-sm-10">
-                        <input class="form-control w-75" type="text" name="txtNumero" id="txtNumero" maxlength="3" value="<?php echo $pokemons['Numero'] ?>" disabled autofocus required><br>
+                        <input class="form-control w-75" type="text" name="txtNumero" id="txtNumero" maxlength="3" value="<?php echo $pokemons[0]['numero'] ?>" disabled autofocus required><br>
                        
                     </div>
                 </div>
@@ -61,19 +61,58 @@ if (isset($_SESSION["errormsg"])) {
                     <label for="txtNombre" class="col-sm-2 col-form-label">Nombre</label>
                     <div class="col-sm-10">
                         
-                        <input type="text" class="form-control w-75" name="txtNombre" id="txtNombre" placeholder="Nombre del pokémon" value="<?php echo $pokemons['Nom']  ?>" required>
+                        <input type="text" class="form-control w-75" name="txtNombre" id="txtNombre" placeholder="Nombre del pokémon" value="<?php echo $pokemons[0]['nombre']  ?>" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="region" class="col-sm-2 col-form-label">Región</label>
                     <div class="col-sm-10">
-                        <select name="region" id="region" class="form-control w-75" value="<?php echo $pokemons['Regió']  ?>">
-                            <option value="kanto">Kanto</option>
-                            <option value="johto">Johto</option>
-                            <option value="hoenn">Hoenn</option>
-                            <option value="sinnoh">Sinnoh</option>
-                            <option value="teselia">Teselia</option>
-                        </select>
+                        <select name="region" id="region" class="form-control w-75">
+                            <?php
+                            if($pokemons[0]['regiones_id'] == 1) {
+                            ?>
+                            <option value="Kanto" selected>Kanto</option>
+                            <option value="Johto" >Johto</option>
+                            <option value="Hoenn" >Hoenn</option>
+                            <option value="Sinnoh" >Sinnoh</option>
+                            <option value="Teselia" >Teselia</option>
+
+
+                            <?php
+                            }elseif($pokemons[0]['regiones_id'] == 2) {
+                            ?>
+                            <option value="Kanto" >Kanto</option>
+                            <option value="Johto" selected>Johto</option>
+                            <option value="Hoenn" >Hoenn</option>
+                            <option value="Sinnoh" >Sinnoh</option>
+                            <option value="Teselia" >Teselia</option>
+                            <?php
+                            }elseif($pokemons[0]['regiones_id'] == 3) {
+                            ?>
+                             <option value="Kanto" >Kanto</option>
+                            <option value="Johto" >Johto</option>
+                            <option value="Hoenn" selected>Hoenn</option>
+                            <option value="Sinnoh" >Sinnoh</option>
+                            <option value="Teselia" >Teselia</option>
+                            <?php
+                            }elseif($pokemons[0]['regiones_id'] == 4) {
+                            ?>
+                             <option value="Kanto" >Kanto</option>
+                            <option value="Johto" >Johto</option>
+                            <option value="Hoenn" >Hoenn</option>
+                            <option value="Sinnoh" selected>Sinnoh</option>
+                            <option value="Teselia" >Teselia</option>
+                            <?php
+                            }elseif($pokemons[0]['regiones_id'] == 5) {
+                            ?>
+                                    <option value="Kanto" >Kanto</option>
+                            <option value="Johto" >Johto</option>
+                            <option value="Hoenn" >Hoenn</option>
+                            <option value="Sinnoh" >Sinnoh</option>
+                            <option value="Teselia" selected>Teselia</option>
+                            <?php
+                            }
+                            ?>                        </select>
                     </div>
                 </div>
 
@@ -83,111 +122,111 @@ if (isset($_SESSION["errormsg"])) {
                         <div class="form-check">
                             <label for="tipo" class="form-check-label">
                                 
-                                <input type="checkbox" name="tipoPokemon[]" id="planta" value="planta"
+                                <input type="checkbox" name="tipoPokemon[]" id="planta" value="Planta"
                                 <?php 
                                 foreach ($pokemons as $key => $valor) { 
                                     if ($key == 'Tipus') {
                                       foreach ($pokemons[$key] as  $valor1 => $valor2) { 
-                                          if($valor2 == 'planta') {
+                                          if($valor2 == 'Planta') {
                                               echo 'checked';
                                           } 
                                         }
                                     }
                                 }
                                 ?> >Planta
-                                <input type="checkbox" name="tipoPokemon[]" id="veneno" value="veneno"  <?php 
+                                <input type="checkbox" name="tipoPokemon[]" id="veneno" value="Veneno"  <?php 
                                 foreach ($pokemons as $key => $valor) { 
                                     if ($key == 'Tipus') {
                                       foreach ($pokemons[$key] as  $valor1 => $valor2) { 
-                                          if($valor2 == 'veneno') {
+                                          if($valor2 == 'Veneno') {
                                               echo 'checked';
                                           } 
                                         }
                                     }
                                 }
                                 ?>>Veneno
-                                <input type="checkbox" name="tipoPokemon[]" id="fuego" value="fuego"  <?php 
+                                <input type="checkbox" name="tipoPokemon[]" id="fuego" value="Fuego"  <?php 
                                 foreach ($pokemons as $key => $valor) { 
                                     if ($key == 'Tipus') {
                                       foreach ($pokemons[$key] as  $valor1 => $valor2) { 
-                                          if($valor2 == 'fuego') {
+                                          if($valor2 == 'Fuego') {
                                               echo 'checked';
                                           } 
                                         }
                                     }
                                 }
                                 ?>>Fuego
-                                <input type="checkbox" name="tipoPokemon[]" id="volador" value="volador" <?php 
+                                <input type="checkbox" name="tipoPokemon[]" id="volador" value="Volador" <?php 
                                 foreach ($pokemons as $key => $valor) { 
                                     if ($key == 'Tipus') {
                                       foreach ($pokemons[$key] as  $valor1 => $valor2) { 
-                                          if($valor2 == 'planta') {
-                                              echo 'volador';
+                                          if($valor2 == 'Planta') {
+                                              echo 'checked';
                                           } 
                                         }
                                     }
                                 }
                                 ?>>Volador
-                                <input type="checkbox" name="tipoPokemon[]" id="agua" value="agua" <?php 
+                                <input type="checkbox" name="tipoPokemon[]" id="agua" value="Agua" <?php 
                                 foreach ($pokemons as $key => $valor) { 
                                     if ($key == 'Tipus') {
                                       foreach ($pokemons[$key] as  $valor1 => $valor2) { 
-                                          if($valor2 == 'planta') {
-                                              echo 'agua';
+                                          if($valor2 == 'Agua') {
+                                              echo 'checked';
                                           } 
                                         }
                                     }
                                 }
                                 ?>>Agua
-                                <input type="checkbox" name="tipoPokemon[]" id="electrico" value="electrico" <?php 
+                                <input type="checkbox" name="tipoPokemon[]" id="electrico" value="Electrico" <?php 
                                 foreach ($pokemons as $key => $valor) { 
                                     if ($key == 'Tipus') {
                                       foreach ($pokemons[$key] as  $valor1 => $valor2) { 
-                                          if($valor2 == 'electrico') {
+                                          if($valor2 == 'Electrico') {
                                               echo 'checked';
                                           } 
                                         }
                                     }
                                 }
                                 ?>>Eléctrico
-                                <input type="checkbox" name="tipoPokemon[]" id="hada" value="hada" <?php 
+                                <input type="checkbox" name="tipoPokemon[]" id="hada" value="Hada" <?php 
                                 foreach ($pokemons as $key => $valor) { 
                                     if ($key == 'Tipus') {
                                       foreach ($pokemons[$key] as  $valor1 => $valor2) { 
-                                          if($valor2 == 'hada') {
+                                          if($valor2 == 'Hada') {
                                               echo 'checked';
                                           } 
                                         }
                                     }
                                 }
                                 ?>>Hada
-                                <input type="checkbox" name="tipoPokemon[]" id="bicho" value="bicho" <?php 
+                                <input type="checkbox" name="tipoPokemon[]" id="bicho" value="Bicho" <?php 
                                 foreach ($pokemons as $key => $valor) { 
                                     if ($key == 'Tipus') {
                                       foreach ($pokemons[$key] as  $valor1 => $valor2) { 
-                                          if($valor2 == 'bicho') {
+                                          if($valor2 == 'Bicho') {
                                               echo 'checked';
                                           } 
                                         }
                                     }
                                 }
                                 ?>>Bicho
-                                <input type="checkbox" name="tipoPokemon[]" id="lucha" value="lucha" <?php 
+                                <input type="checkbox" name="tipoPokemon[]" id="lucha" value="Lucha" <?php 
                                 foreach ($pokemons as $key => $valor) { 
                                     if ($key == 'Tipus') {
                                       foreach ($pokemons[$key] as  $valor1 => $valor2) { 
-                                          if($valor2 == 'lucha') {
+                                          if($valor2 == 'Lucha') {
                                               echo 'checked';
                                           } 
                                         }
                                     }
                                 }
                                 ?>>Lucha
-                                <input type="checkbox" name="tipoPokemon[]" id="psiquico" value="psiqiuco" <?php 
+                                <input type="checkbox" name="tipoPokemon[]" id="psiquico" value="Psiqiuco" <?php 
                                 foreach ($pokemons as $key => $valor) { 
                                     if ($key == 'Tipus') {
                                       foreach ($pokemons[$key] as  $valor1 => $valor2) { 
-                                          if($valor2 == 'psiquico') {
+                                          if($valor2 == 'Psiquico') {
                                               echo 'checked';
                                           } 
                                         }
@@ -202,7 +241,7 @@ if (isset($_SESSION["errormsg"])) {
                     <div class="col-sm-10">
                         <div class="input-group mb-3">
                             <label for="peso" class="col-sm-2 col-form-label">Altura</label>
-                            <input type="number" class="form-control w-50" name="altura" id="altura" min="1" style="margin-left: 4%;"  value="<?php echo $pokemons['Alçada']  ?>">
+                            <input type="number" class="form-control w-50" name="altura" id="altura" min="1" style="margin-left: 4%;"  value="<?php echo $pokemons[0]['altura']  ?>">
                             <span class="input-group-text" style="margin-right:5%">cm</span>
                         </div>
                     </div>
@@ -211,7 +250,7 @@ if (isset($_SESSION["errormsg"])) {
                     <div class="col-sm-10">
                         <div class="input-group mb-3">
                             <label for="peso" class="col-sm-2 col-form-label">Peso</label>
-                            <input type="number" class="form-control w-50" min="0" step=".01" name="peso" id="peso" style="margin-left: 4%;" value="<?php echo $pokemons['Pes']  ?>">
+                            <input type="number" class="form-control w-50" min="0" step=".01" name="peso" id="peso" style="margin-left: 4%;" value="<?php echo $pokemons[0]['peso']  ?>">
                             <span class="input-group-text" style="margin-right:5%">KG</span>
                         </div>
                     </div>
@@ -221,23 +260,23 @@ if (isset($_SESSION["errormsg"])) {
                     <div class="col-sm-2">Evolución</div>
                     <div class="col-sm-10">
 
-                        <input type="radio" class="form-check-input" name="rEvolucion" id="rbSinEvolucionar" value="rbSinEvolucionar"
+                        <input type="radio" class="form-check-input" name="rEvolucion" id="rbSinEvolucionar" value="Sin Evolucionar"
                         <?php 
-                      if($pokemons['Evolució'] == "rbSinEvolucionar" ) {
+                      if($pokemons[0]['evolucion'] == "Sin Evolucionar" ) {
                           echo 'checked';
                       }
                                 ?>>
                         <label for="rbSinEvolucionar" class="form-check-label">Sin Evolucionar</label>
-                        <input type="radio" class="form-check-input" name="rEvolucion" id="rbPrimeraEvolucion" value="rbPrimeraEvolucion"
+                        <input type="radio" class="form-check-input" name="rEvolucion" id="rbPrimeraEvolucion" value="Primera Evolucion"
                         <?php
-                        if($pokemons['Evolució'] == "rbPrimeraEvolucion" ) {
+                        if($pokemons[0]['evolucion'] == "Primera Evolucion" ) {
                             echo 'checked';
                         }
                                 ?>>
                         <label for="rbPrimeraEvolucion" class="form-check-label">Primera evolución</label>
-                        <input type="radio" class="form-check-input" name="rEvolucion" id="rbSegundaEvolucion" value="rbSegundaEvolucion"
+                        <input type="radio" class="form-check-input" name="rEvolucion" id="rbSegundaEvolucion" value="Segunda Evolucion"
                         <?php
-                        if($pokemons['Evolució'] == "rbSegundaEvolucion" ) {
+                        if($pokemons[0]['evolucion'] == "Segunda Evolucion" ) {
                             echo 'checked';
                         }
                         ?>>
@@ -253,7 +292,7 @@ if (isset($_SESSION["errormsg"])) {
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-secondary text-end" href="\pokemon\index.php" role="button">Cancelar</a>
-                    <button type="submit" class="btn btn-primary" name='edit' value="<?php echo $pokemons['Numero'] ?>">Aceptar</button>
+                    <button type="submit" class="btn btn-primary" name='edit' value="<?php echo $pokemons[0]['numero'] ?>">Aceptar</button>
                 </div>
             
             </form>

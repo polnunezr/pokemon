@@ -52,11 +52,8 @@
         echo $message;
         unset($_SESSION['msg']);
     }
-        if (isset($_SESSION['pokedex'])) {
-            $pokedex = $_SESSION['pokedex'];
-        } else {
-            $pokedex = [];
-        }
+            $pokedex = selectAllPokemons() ;
+       
      ?>
         </div>
        <div class="container-fluid">
@@ -85,7 +82,7 @@
                                 <footer class="card-footer  text-end">
                                 <form action="../php_controllers/pokemonController.php" method="post">
                                 <button type="submit" class="btn btn-outline-danger" name="delete" value="<?php echo $pokemon['numero'] ?>"> <i class="fas fa-trash-alt"></i>
-                                <!--<input type="hidden" name="delete" value="<?php echo $pokemon['numero'] ?>">--></button>
+                                <!--<input type="hidden" name="delete" value=" php echo $pokemon['numero' ?>">--></button>
 
                                 <button type="submit" class="btn btn-outline-primary" name="editPokemon" value="<?php echo $pokemon['numero'] ?>"><i class="fas fa-edit"></i>
                                <!-- <input type="hidden" name="editPokemon" value="<?php echo $pokemon['numero'] ?>">--></button>
@@ -94,13 +91,14 @@
                             </div>
                             </span>
                     </div>
-                            <?php
-                        }
-                                ?>
+                        
                             
                            
                      
                 </div>
+                <?php
+                        }
+                                ?>
             </div>
        </div>
 
