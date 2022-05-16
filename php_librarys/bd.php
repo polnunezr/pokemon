@@ -12,7 +12,7 @@ function openBD() {
 }
 function selectAllPokemons() {
    $conn = openBD();
-   $setenciaText = "select * from pokemons";
+   $setenciaText = "select * from pokemons order by numero";
    $sentencia = $conn->prepare($setenciaText);
    $sentencia->execute();
    $resultado = $sentencia->fetchAll();
