@@ -1,113 +1,202 @@
+<?php
+    session_start();
+
+    include("../php_librarys/bd.php");
+
+    if(isset($_SESSION["mensajeAfegir"])) {
+        if($_SESSION["mensajeAfegir"] != "Pokemon añadido correctamente") {
+
+            echo '<div class="alert alert-danger" role="alert">';
+            echo $_SESSION["mensajeAfegir"];
+            echo '</div>';
+        }
+        else {
+            echo '<div class="alert alert-success" role="alert">';
+            echo $_SESSION["mensajeAfegir"];
+            echo '</div>';
+        }
+        unset($_SESSION["mensajeAfegir"]);
+    }
+    else if(isset($_SESSION["mensajeEsborrar"])) {
+        if($_SESSION["mensajeEsborrar"] != "Pokemon borrado correctamente") {
+
+            echo '<div class="alert alert-danger" role="alert">';
+            echo $_SESSION["mensajeEsborrar"];
+            echo '</div>';
+        }
+        else {
+            echo '<div class="alert alert-success" role="alert">';
+            echo $_SESSION["mensajeEsborrar"];
+            echo '</div>';
+        }
+        unset($_SESSION["mensajeEsborrar"]);
+
+    }
+    /*
+    $pokedex;
+
+    if(!isset($_SESSION["pokedex"])) {
+
+        $pokedex = [];
+    }
+
+    else {
+        $pokedex = $_SESSION["pokedex"];
+    }
+
+    if(isset($_SESSION["pokemon"])) {
+        unset($_SESSION["pokemon"]);
+    }
+    */
+    if(isset($_SESSION["pokemon"])) {
+        unset($_SESSION["pokemon"]);
+    }
+
+    $pokedex = selectPokemons();
+    $tipos = selectPokemonsTipus();
+    $regions = selectPokemonsRegions();
+    $pokemon = selectPokemon(2);
+    //$tiposPokemon = selectTiposPokemon(2);
+    //modificarPokemon("003","Snorlaxx",50,150,"Sense evolucio","",4,"Planta, Agua, Lucha");
+    // insertPokemon("003","Pikachu","Teselia","Planta, Veneno, Agua, Bicho",99.5,50,"Sense evolucionar","003.png");
+    //deletePokemon(1);
+    //var_dump($pokedex);
+
+   
+
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!--<link rel="stylesheet" href="../style/styleList.css">-->
+    <link rel="stylesheet" href="../style/estiloPokemon_list.css">
     <?php
-    include '../bootstrap/index.php';
-    include '../php_partials/menu.php';
-    include '../php_librarys/bd.php';
-   session_start();
-    // Funciones que funcionan
-        /*
-        --selectAllPokemons()
-        --selectAllTypes()
-        --selectAllRegions()
-        --selectPokemon("001")
-        --selectTypesPokemon("001")      
-         */
-  
-   ?>
+        include('../data/bootstrap.php')
+    ?>
+    <title>Document</title>
 </head>
-
 <body>
     <?php
-    //Error message
-    if (isset($_SESSION["errormsg"])) {
-        $error = $_SESSION["errormsg"];
-     } else if(isset($_SESSION["msg"])) {
-        $message = $_SESSION["msg"];
-     }
-        if (isset($_SESSION["errormsg"])) {
-
+        include('../php_partials/menu.php')
     ?>
-        <div class="alert alert-danger" role="alert">
+    <a href="pokemon.php">
+        <div id="buttonPlus"></div>
+    </a>
+
+    <div class="container-fluid">
+        
+        
+
+        
+
             <?php
-            $_SESSION['errormsg'] = $error;
-            echo $error;
-            unset($_SESSION['errormsg']);
+
+                $countCard = 1;
+
+               
+
+                foreach($pokedex as $p) {
+
+                    if($countCard == 1) { 
+                        echo '<div class="row row-cols-1 row-cols-md-5 g-5">';
+                    }
+
+                    echo '<form method="POST" action="../php_controllers/pokemonController.php">';
+
+                    echo '<div class="col d-flex justify-content-center align-items-center">';
+                    echo '<div class="card border-secondary w-51 m-4">';
+                    echo '<div class="card-body">';
+                    echo '<img src="../media/'.$p["imagen"].'" class="card-img-top p-2 imgPokemon " alt="...">';
+                    echo '<div class="tipus">';
+                    echo '<h5 class="card-title"><strong>'. $p["numero"].'-'.$p["nombre"] .'</strong></h5>';
+
+                    echo '<p class="card-text ">';
+                    
+                    $numeroPokemon = $p["numero"];
+                    //var_dump($numeroPokemon);
+
+                    $tipos = selectTiposPokemon($numeroPokemon);
+                    
+                    
+
+                    if(count($tipos) == 1) {
+                        echo '<span class="badge bg-warning text-dark">'.$tipos[0].'</span>';
+
+                    }
+                    elseif(!empty($tipos)){
+                        $finalizado = false;
+                        $countTipos = count($tipos);
+                        //var_dump($countTipos);
+                        //var_dump($countTipos);
+                        do {
+                            $countTipos = $countTipos - 2;
+                            //var_dump($countTipos);
+                            if($countTipos >= 0) {
+                                echo '<span class="badge bg-warning text-dark">'.$tipos[$countTipos].'</span> <span class="badge bg-warning text-dark">'.$tipos[$countTipos+1].'</span><br>';
+                            }
+                            else {
+                                if($countTipos == -1) {
+                                    echo '<span class="badge bg-warning text-dark">'.$tipos[0].'</span>';
+                                }
+
+                                $finalizado = true;
+                            }
+
+
+                        } while(!$finalizado);
+                        
+                    }                
+                    
+
+                    echo "</p>";
+
+                    echo '</div>';
+                    echo '</div>';
+                    echo '<div class="card-footer d-flex justify-content-end">';
+
+                    echo '<button type="submit" name="buttonDelete" class="btn btn-outline-danger me-3"><i class="far fa-trash-alt"></i></button>';
+                    echo '<input type="hidden" name="inputDelete" value="'.$p["numero"].'">';   
+                    //var_dump($p["Numero"]);
+
+                    echo '<button type="submit" name="buttonEdit" class="btn btn-outline-primary"><i class="far fa-edit"></i></button>';
+                    echo '<input type="hidden" name="inputEdit" value="'.$p["numero"].'">';
+
+                    echo '</div>';
+
+                    echo '</div>';
+                    echo '</div>';
+
+                    echo '</form>';
+
+                    if($countCard == 5) {
+                        echo '</div>';
+                        $countCard = 0;
+                    }
+
+
+                    $countCard++;
+
+                }
+
+                if($countCard != 1) {
+                    echo '</div>';
+                }
+
+                
 
             ?>
-        </div>
 
+        
+
+
+    </div>
+
+    <script src="https://kit.fontawesome.com/7fae944b38.js" crossorigin="anonymous"></script>
     
-    <?php
-    } elseif (isset($_SESSION["msg"])) { ?>
-        <div class="alert alert-success" role="alert">
-        <?php
-        $_SESSION['msg'] = $message;
-        echo $message;
-        unset($_SESSION['msg']);
-    }
-            $pokedex = selectAllPokemons() ;
-       
-     ?>
-        </div>
-       <div class="container-fluid">
-            <div class="row row-cols-1 row-cols-md-5">
-                <?php 
-                    foreach($pokedex as $pokemon) {
-                   ?>
-                <div class="col mt-2">
-                    <div class="card" style="width: 18rem;">
-                        <span class="border border-secondary">
-                            <img src="/pokemon/media/<?php echo $pokemon['imagen']?>" class="card-img-top">
-                            <div class="card-body">
-                                <h5 class="card-title"><?php echo $pokemon['numero'] ." ". $pokemon['nombre']."" ?></h5>
-                                <?php
-                                   foreach ($pokemon as $key => $valor) { 
-                                  if ($key == '') {
-                                    foreach ($pokemon[$key] as  $valor1 => $valor2) {  
-                                ?>
-                                <span class="badge bg-warning text-dark" ><?php echo  $valor2 ?></span>
-                                <?php 
-                                }
-                                }
-                            }
-                            ?>
-                                    
-                                <footer class="card-footer  text-end">
-                                <form action="../php_controllers/pokemonController.php" method="post">
-                                <button type="submit" class="btn btn-outline-danger" name="delete" value="<?php echo $pokemon['numero'] ?>"> <i class="fas fa-trash-alt"></i>
-                                <!--<input type="hidden" name="delete" value=" php echo $pokemon['numero' ?>">--></button>
-
-                                <button type="submit" class="btn btn-outline-primary" name="editPokemon" value="<?php echo $pokemon['numero'] ?>"><i class="fas fa-edit"></i>
-                               <!-- <input type="hidden" name="editPokemon" value="<?php echo $pokemon['numero'] ?>">--></button>
-                                </form>
-                            </footer>
-                            </div>
-                            </span>
-                    </div>
-                        
-                            
-                           
-                     
-                </div>
-                <?php
-                        }
-                                ?>
-            </div>
-       </div>
-
-            <div class="position-bottom position-fixed bottom-0 end-0 m-5" style="height:25px;width:2px;">
-                <a href="pokemon.php" type="button" class="btn bg-warning text-dark rounded"><i class="fas fa-plus"></i></a>
-            </div>
-
-
-
 </body>
-
 </html>

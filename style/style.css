@@ -1,6 +1,6 @@
 body {
-    background-image: url(../media/pokemaster_342150.jpg);
-    height: auto;
+    background-image: url('/media/pokemaster_342150.jpg');
     background-repeat: no-repeat;
+    /*background-position:center;*/
     background-size: cover;
 }

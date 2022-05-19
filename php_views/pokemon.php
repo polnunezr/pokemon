@@ -1,139 +1,639 @@
-    <!DOCTYPE html>
-    <html lang="en">
+<?php
+    session_start();
+    /*
+    $_SESSION["pokemon"] = [
+        "Numero" => "001",
+        "Nom" => "Bulbasaur",
+        "Regio" => "Hoenn",
+        "Tipus" => "Planta, Veneno",
+        "Alsada" => 70,
+        "Pes" => 6.9,
+        "Evolucio" => "Sense evolucionar",
+        "Imatge" => "001.png",
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Formulari Pokemon</title>
-        <?php
-        include '../bootstrap/index.php';
-        if(!isset($_SESSION)){
-            session_start();
-           }
-           if(isset([$_SESSION]['pokemon'])) {
-               $pokemon = $_SESSION['pokemon'];
-           } else {
-               $pokemon = [];
-           }
-  
-        ?>
-    </head>
-    <?php
-    if (isset($_SESSION["errormsg"])) {
-        $error = $_SESSION["errormsg"];
-     } else if(isset($_SESSION["msg"])) {
-        $message = $_SESSION["msg"];
-     }
-        if (isset($_SESSION["errormsg"])) {
+    ];
+    */
 
-    ?>
-        <div class="alert alert-danger" role="alert">
-            <?php
-            $_SESSION['errormsg'] = $error;
-            echo $error;
-            unset($_SESSION['errormsg']);
+    
+
+    $pokemon = [];
+
+    if(isset($_SESSION["pokemon"])) {
+        $pokemon = $_SESSION["pokemon"];
+    }
+
+    if(isset($_SESSION["mensajeAfegir"])) {
+        if($_SESSION["mensajeAfegir"] != "Pokemon añadido correctamente") {
+
+            echo '<div class="alert alert-danger" role="alert">';
+            echo $_SESSION["mensajeAfegir"];
+            echo '</div>';
         }
+        else {
+            echo '<div class="alert alert-success" role="alert">';
+            echo $_SESSION["mensajeAfegir"];
+            echo '</div>';
+        }
+        unset($_SESSION["mensajeAfegir"]);
+    }
+    else if(isset($_SESSION["mensajeEsborrar"])) {
+        if($_SESSION["mensajeEsborrar"] != "Pokemon borrado correctamente") {
 
-            ?>
-        </div>
+            echo '<div class="alert alert-danger" role="alert">';
+            echo $_SESSION["mensajeEsborrar"];
+            echo '</div>';
+        }
+        else {
+            echo '<div class="alert alert-success" role="alert">';
+            echo $_SESSION["mensajeEsborrar"];
+            echo '</div>';
+        }
+        unset($_SESSION["mensajeEsborrar"]);
 
-   
+    }
 
-    <body>
-        <div class="container-fluid" style="width: 45%;height:55%;margin-top:200px">
+?>
 
-            <form class="border border-dark justify-content-center" action="../php_controllers/pokemonController.php" method="POST" enctype="multipart/form-data">
-                <header class="card-header"><img src="../media/pokeball.png" height="20">Pokemon</header>
-                <div class="form-group row">
-                    <label for="txtNumero" class="col-sm-2 col-form-label">Número:</label>
-                    <div class="col-sm-10">
-                        <input class="form-control w-75" type="text" name="txtNumero" id="txtNumero" maxlength="3" placeholder="Número del pokémon" autofocus required><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php
+        include('../data/bootstrap.php')
+    ?>
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="card">
+    <div class="d-flex card-header p-2 mb-2 bg-secondary text-white">
+
+        <img class="m-1" width="50" height="50" src="../media/pikachu.png" alt="">
+        <h3 class="mt-2 ms-2">Pokemon</h3>
+
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
+
+            <form method="POST" action="../php_controllers/pokemonController.php" enctype="multipart/form-data">
+
+                <div class="row">
+                    <div class="col col-1 d-flex align-items-center">
+                        <p>Número</p>
+                    
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="txtNombre" class="col-sm-2 col-form-label">Nombre</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control w-75" name="txtNombre" id="txtNombre" placeholder="Nombre del pokémon" required>
+                    <div class="col col-11">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" aria-describedby="basic-addon1" name="afegirNumero" value="<?php
+                            if(isset($_SESSION["pokemon"])) {
+                                echo $pokemon["Numero"];
+                            }
+                            ?>" required>
+                        </div>
                     </div>
+
                 </div>
-                <div class="form-group row">
-                    <label for="region" class="col-sm-2 col-form-label">Región</label>
-                    <div class="col-sm-10">
-                        <select name="region" id="region" class="form-control w-75">
-                            <option value="Kanto">Kanto</option>
-                            <option value="Johto">Johto</option>
-                            <option value="Hoenn">Hoenn</option>
-                            <option value="Sinnoh">Sinnoh</option>
-                            <option value="Teselia">Teselia</option>
+
+                <div class="row mt-4">
+                    <div class="col col-1 d-flex align-items-center">
+                        <p>Nombre</p>
+                    </div>
+                    <div class="col col-11">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" aria-describedby="basic-addon1" name="afegirNom" value="<?php
+                            if(isset($_SESSION["pokemon"])) {
+                                echo $pokemon["Nom"];
+                            }
+                            ?>"required>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col col-1 d-flex align-items-center">
+                        <p>Regió</p>
+                    </div>
+                    <div class="col col-11">
+                        <select class="form-select" aria-label="Default select example" name="regioAfegir">
+                            <?php
+                                if(isset($_SESSION["pokemon"])) {
+
+                                    $region = $pokemon["Regio"];
+
+                                    //var_dump($region);
+
+                                    $regiones = ["Kanto","Jotho","Hoenn","Teselia"];
+
+                                    $posicion = 0;
+        
+                                    switch($region) {
+                                        case 'Kanto':
+                                            echo '<option selected>'.$regiones[0].'</option>';
+                                            break;
+                                        case 'Jotho':
+                                            echo '<option selected>'.$regiones[1].'</option>';
+                                            $posicion = 1;
+                                            break;
+                                        case 'Hoenn':
+                                            echo '<option selected>'.$regiones[2].'</option>';
+                                            $posicion = 2;
+                                            break;
+                                        case 'Teselia':
+                                            echo '<option selected>'.$regiones[3].'</option>';
+                                            $posicion = 3;
+                                            break;
+        
+                                    }
+
+                                    unset($regiones[$posicion]);
+
+                                    array_values($regiones);
+
+                                    foreach($regiones as $r) {
+                                        echo '<option>'.$r.'</option>';
+                                    }
+
+                                }
+                                else {
+                                    echo '<option selected>Kanto</option>';
+                                    echo '<option>Jotho</option>';
+                                    echo '<option>Hoenn</option>';
+                                    echo '<option>Teselia</option>';
+                                }
+                                
+                                
+                            ?>
                         </select>
                     </div>
+
                 </div>
 
-                <div class="form-group row">
-                    <div class="col-sm-2">Tipo</div>
-                    <div class="col-sm-10">
-                        <div class="form-check">
-                            <label for="tipo" class="form-check-label">
-                                <input type="checkbox" name="tipoPokemon[]" id="Planta" value="Planta">Planta
-                                <input type="checkbox" name="tipoPokemon[]" id="eneno" value="Veneno">Veneno
-                                <input type="checkbox" name="tipoPokemon[]" id="fuego" value="Fuego">Fuego
-                                <input type="checkbox" name="tipoPokemon[]" id="volador" value="Volador">Volador
-                                <input type="checkbox" name="tipoPokemon[]" id="agua" value="Agua">Agua
-                                <input type="checkbox" name="tipoPokemon[]" id="electrico" value="Electrico">Eléctrico
-                                <input type="checkbox" name="tipoPokemon[]" id="hada" value="Hada">Hada
-                                <input type="checkbox" name="tipoPokemon[]" id="bicho" value="Bicho">Bicho
-                                <input type="checkbox" name="tipoPokemon[]" id="lucha" value="Lucha">Lucha
-                                <input type="checkbox" name="tipoPokemon[]" id="psiquico" value="Psiqiuco">Psíquico <br>
-                            </label>
-                        </div>
+                
+                <div class="row mt-4">
+                    <div class="col col-1 d-flex align-items-center">
+                        <p>Tipo</p>
                     </div>
+                    <div class="col col-11">
+                        <div class="d-flex">
+
+
+                            <div class="form-check">
+
+                                <?php
+                                    function checkChecked($tipoInput,$tipos) {
+                                        $tipos = str_replace(' ','',$tipos);
+
+                                        $tipos = explode(",",$tipos);
+
+                                        $checked = false;
+                                        
+                                        foreach($tipos as $t) {
+                                            
+                                            if($t == $tipoInput) {
+                                                $checked = true;
+                                            }
+                                        }
+
+                                        if($checked) {
+                                            echo 'checked';
+                                        }
+                                    }
+                                ?>
+
+                                <input class="form-check-input" type="checkbox" value="Planta" name="tipusAfegir[]" <?php 
+                                if(isset($_SESSION["pokemon"])) {
+                                    if($pokemon["Tipus"] != "") {
+
+                                        $tipoInput = "Planta";
+
+                                        $tipos = $pokemon["Tipus"];
+
+                                        checkChecked($tipoInput,$tipos);
+                                    }
+                                    
+
+                                    
+                                }
+                                ?>>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Planta
+                                </label>
+                            </div>
+
+                            <div class="form-check ms-3">
+                                <input class="form-check-input" type="checkbox" value="Veneno" name="tipusAfegir[]" <?php 
+                                if(isset($_SESSION["pokemon"])) {
+                                    if($pokemon["Tipus"] != "") {
+                                    $tipoInput = "Veneno";
+
+                                    $tipos = $pokemon["Tipus"];
+
+                                    checkChecked($tipoInput,$tipos);
+                                    }
+                                    
+                                }
+                                ?>>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Veneno
+                                </label>
+                            </div>
+
+                            <div class="form-check ms-3">
+                                <input class="form-check-input" type="checkbox" value="Fuego" name="tipusAfegir[]" <?php 
+                                if(isset($_SESSION["pokemon"])) {
+                                    if($pokemon["Tipus"] != "") {
+                                    $tipoInput = "Fuego";
+
+                                    $tipos = $pokemon["Tipus"];
+
+                                    checkChecked($tipoInput,$tipos);
+                                    }
+
+                                    
+                                }
+                                ?>>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Fuego
+                                </label>
+                            </div>
+
+                            <div class="form-check ms-3">
+                                <input class="form-check-input" type="checkbox" value="Volador" name="tipusAfegir[]" <?php 
+                                if(isset($_SESSION["pokemon"])) {
+                                    if($pokemon["Tipus"] != "") {
+                                    $tipoInput = "Volador";
+
+                                    $tipos = $pokemon["Tipus"];
+
+                                    checkChecked($tipoInput,$tipos);
+
+                                    }
+                                }
+                                ?>>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Volador
+                                </label>
+                            </div>
+
+                            <div class="form-check ms-3">
+                                <input class="form-check-input" type="checkbox" value="Agua" name="tipusAfegir[]" <?php 
+                                if(isset($_SESSION["pokemon"])) {
+                                    if($pokemon["Tipus"] != "") {
+                                    $tipoInput = "Agua";
+
+                                    $tipos = $pokemon["Tipus"];
+
+                                    checkChecked($tipoInput,$tipos);
+
+                                    }
+                                }
+                                ?>>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Agua
+                                </label>
+                            </div>
+
+                            <div class="form-check ms-3">
+                                <input class="form-check-input" type="checkbox" value="Electrico" name="tipusAfegir[]" <?php 
+                                if(isset($_SESSION["pokemon"])) {
+                                    if($pokemon["Tipus"] != "") {
+                                    $tipoInput = "Electrico";
+
+                                    $tipos = $pokemon["Tipus"];
+
+                                    checkChecked($tipoInput,$tipos);
+
+                                    }
+                                }
+                                ?>>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Eléctrico
+                                </label>
+                            </div>
+
+                            <div class="form-check ms-3">
+                                <input class="form-check-input" type="checkbox" value="Hada" name="tipusAfegir[]" <?php 
+                                if(isset($_SESSION["pokemon"])) {
+                                    if($pokemon["Tipus"] != "") {
+                                    $tipoInput = "Hada";
+
+                                    $tipos = $pokemon["Tipus"];
+
+                                    checkChecked($tipoInput,$tipos);
+
+                                    }
+                                }
+                                ?>>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Hada
+                                </label>
+                            </div>
+
+                            <div class="form-check ms-3">
+                                <input class="form-check-input" type="checkbox" value="Bicho" name="tipusAfegir[]" <?php 
+                                if(isset($_SESSION["pokemon"])) {
+                                    if($pokemon["Tipus"] != "") {
+                                    $tipoInput = "Bicho";
+
+                                    $tipos = $pokemon["Tipus"];
+
+                                    checkChecked($tipoInput,$tipos);
+                                    }
+                                    
+                                }
+                                ?>>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Bicho
+                                </label>
+                            </div>
+
+
+                        </div>
+
+                        <div class="d-flex mt-2">
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="Lucha" name="tipusAfegir[]" <?php 
+                                if(isset($_SESSION["pokemon"])) {
+                                    if($pokemon["Tipus"] != "") {
+                                    $tipoInput = "Lucha";
+
+                                    $tipos = $pokemon["Tipus"];
+
+                                    checkChecked($tipoInput,$tipos);
+                                    }
+                                    
+                                }
+                                ?>>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Lucha
+                                </label>
+                            </div>
+
+                            <div class="form-check ms-3">
+                                <input class="form-check-input" type="checkbox" value="Psiquico" name="tipusAfegir[]" <?php 
+                                if(isset($_SESSION["pokemon"])) {
+                                    if($pokemon["Tipus"] != "") {
+                                    $tipoInput = "Psiquico";
+
+                                    $tipos = $pokemon["Tipus"];
+
+                                    checkChecked($tipoInput,$tipos);
+                                    }
+                                    
+                                }
+                                ?>>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Psíquico
+                                </label>
+                            </div>
+
+
+                        </div>
+                        
+
                 </div>
-                <div class="form-group row">
-                    <div class="col-sm-10">
+
+                <div class="row mt-4">
+                    <div class="col col-1 d-flex align-items-center">
+                        <p>Altura</p>
+                    </div>
+                    <div class="col col-11">
                         <div class="input-group mb-3">
-                            <label for="peso" class="col-sm-2 col-form-label">Altura</label>
-                            <input type="number" class="form-control w-50" name="altura" id="altura" min="1" style="margin-left: 4%;">
-                            <span class="input-group-text" style="margin-right:5%">cm</span>
+                            <input type="number" class="form-control" aria-describedby="basic-addon2" name="alsadaAfegir" value="<?php
+                            if(isset($_SESSION["pokemon"])) {
+                                echo $pokemon["Alsada"];
+                            }
+                            
+                            ?>" required>
+                            <span class="input-group-text" id="basic-addon2">cm</span>
                         </div>
                     </div>
+
                 </div>
-                <div class="form-group row">
-                    <div class="col-sm-10">
+
+
+                <div class="row mt-4">
+                    <div class="col col-1 d-flex align-items-center">
+                        <p>Peso</p>
+                    </div>
+                    <div class="col col-11">
                         <div class="input-group mb-3">
-                            <label for="peso" class="col-sm-2 col-form-label">Peso</label>
-                            <input type="number" class="form-control w-50" min="0" step=".01" name="peso" id="peso" style="margin-left: 4%;">
-                            <span class="input-group-text" style="margin-right:5%">KG</span>
+                            <input type="number" class="form-control" aria-describedby="basic-addon2" name="pesAfegir" value="<?php
+                            if(isset($_SESSION["pokemon"])) {
+                                echo $pokemon["Pes"];
+                            }
+                            
+                            ?>" required>
+                            <span class="input-group-text" id="basic-addon2">kg</span>
                         </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-2">Evolución</div>
-                    <div class="col-sm-10">
 
-                        <input type="radio" class="form-check-input" name="rEvolucion" id="rbSinEvolucionar" value="Sin Evolucionar">
-                        <label for="rbSinEvolucionar" class="form-check-label">Sin Evolucionar</label>
-                        <input type="radio" class="form-check-input" name="rEvolucion" id="rbPrimeraEvolucion" value="Primera Evolucion">
-                        <label for="rbPrimeraEvolucion" class="form-check-label">Primera evolución</label>
-                        <input type="radio" class="form-check-input" name="rEvolucion" id="rbSegundaEvolucion" value="Segunda Evolucion">
-                        <label for="rbSegundaEvolucion" class="form-check-label">Segunda evolución</label>
+                </div>
+
+
+                <div class="row mt-4">
+                    <div class="col col-1 d-flex align-items-center">
+                        <p>Evolución</p>
                     </div>
-                </div>
+                    <div class="col col-11">
+                        <div class="d-flex">
 
-                <div class="form-group row">
-                    <label for="imagen" class="col-sm-2 col-form-label">Imagen</label>
-                    <div class="col-sm-10">
-                        <input  name="imagen" type="file" id="imagen" accept="image/png, image/jpeg">
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" value="Sense evolucionar" <?php
+                                if(isset($_SESSION["pokemon"])) {
+                                    $evolucionInput = "Sense evolucionar";
+                                    if($evolucionInput == $pokemon["Evolucio"]) {
+                                        echo 'checked';
+                                    }
+                                }
+                                else {
+                                    echo 'checked';
+                                }
+                                
+                                ?>>
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Sense evolucionar
+                                </label>
+                            </div>
+
+                            <div class="form-check ms-3">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" value="Primera evolucio" <?php
+                                if(isset($_SESSION["pokemon"])) {
+                                    $evolucionInput = "Primera evolucio";
+                                    if($evolucionInput == $pokemon["Evolucio"]) {
+                                        echo 'checked';
+                                    }
+                                }
+                                
+                                ?>>
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Primera evolucio
+                                </label>
+                            </div>
+
+                            <div class="form-check ms-3">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" value="Altres evolucions" <?php
+                                if(isset($_SESSION["pokemon"])) {
+                                    $evolucionInput = "Altres evolucions";
+                                    if($evolucionInput == $pokemon["Evolucio"]) {
+                                        echo 'checked';
+                                    }
+                                }
+                                
+                                ?>>
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Altres evolucions
+                                </label>
+                            </div>
+
+
+                        </div>
+                        
 
                     </div>
+
                 </div>
-                <div class="card-footer text-end">
-                    <a class="btn btn-secondary text-end" href="\pokemon\index.php" role="button">Cancelar</a>
-                    <button type="submit" class="btn btn-primary" name = 'add'>Aceptar</button>
+
+                <div class="row mt-4">
+                    <div class="col col-1 d-flex align align-items-center">
+                        <p>Imagen</p>
+                    </div>
+
+                    <div class="col col-11">
+                        <input type="file" name="imatgeAfegir" value="Seleccionar archivo" accept="image/*" required>
+
+                    </div>
+
+
+
                 </div>
+
+                <div class="row mt-4">
+                    <div class="col col-12">
+                        <div class="d-flex justify-content-end">
+                            <a href="pokemon_list.php">
+
+                                <button type="button" class="btn btn-secondary mx-3">Cancelar</button>
+
+
+                            </a>
+
+                            
+                            <button type="submit" class="btn btn-primary" name="submitAfegirPokemon">Aceptar</button> 
+                            
+                            
+                        </div>
+                    
+                </div>
+
+
+            </div>
+
             </form>
             
         </div>
-    </body>
+    </div>
+    </div>
 
-    </html>
+    <!--
+    <form action="" method="">
+        
+        <div>
+            <label>Numero</label>
+            <input type="text" maxlength="3" placeholder="Número de pokemon" autofocus/>
+        </div>
+        <div>
+            <label>Nombre</label>
+            <input type="text" placeholder="Nombre de pokémon"/>
+        </div>
+        <div>
+            <label>Regio</label>
+            <select>
+                <option>Kanto</option>
+                <option>Jotho</option>
+                <option>Hoenn</option>
+                <option>Sinnoh</option>
+                <option>Teselia</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Tipo</label>
+            <input type="checkbox" name="tipo" value="planta"/>
+            <label>Planta</label>
+
+            <input type="checkbox" name="tipo" value="veneno"/>
+            <label>Veneno</label>
+
+            <input type="checkbox" name="tipo" value="fuego"/>
+            <label>Fuego</label>
+
+            <input type="checkbox" name="tipo" value="volador"/>
+            <label>Volador</label>
+
+            <input type="checkbox" name="tipo" value="agua"/>
+            <label>Agua</label>
+
+            <input type="checkbox" name="tipo" value="electrico"/>
+            <label>Eléctrico</label>
+
+            <input type="checkbox" name="tipo" value="hada"/>
+            <label>Hada</label>
+
+            <input type="checkbox" name="tipo" value="bicho"/>
+            <label>Bicho</label>
+
+            <input type="checkbox" name="tipo" value="lucha"/>
+            <label>Lucha</label>
+
+            <input type="checkbox" name="tipo" value="psiquico"/>
+            <label>Psíquico</label>
+
+        </div>
+
+        <div>
+            <label>Altura</label>
+            <input type="number" min="1"/>
+
+        </div>
+
+        <div>
+            <label>Pes</label>
+            <input type="number" min="0" step="0.01" />
+
+        </div>
+
+        <div>
+            <label>Evolucio</label>
+            <input type="radio" name="evolucio" value="sinEvolucionar" checked/>
+            <label>Sin evolucionar</label>
+
+            <input type="radio" name="evolucio" value="primeraEvolucion"/>
+            <label>Primera evolucion</label>
+
+            <input type="radio" name="evolucio" value="otrasEvoluciones"/>
+            <label>Otras evoluciones</label>
+
+        </div>
+
+        <div>
+            <label>Imagen</label>
+            <input type="file" value="Seleccionar archivo"/>
+
+        </div>
+
+        <div>
+            <button type="submit">Aceptar</button>
+            <a href="./index.php">Cancelar</a>
+        </div>
+    
+    </form>
+    -->
+    
+</body>
+</html>

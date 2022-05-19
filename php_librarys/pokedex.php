@@ -1,133 +1,151 @@
 <?php
-if(!isset($_SESSION)){
-    session_start();
-   }
-include '../php_librarys/bd.php';
 
-if (isset($_SESSION['pokedex'])) {
-    $pokedex = $_SESSION['pokedex'];
-} else {
-    $pokedex = selectAllPokemons();
-}
-function crearPokemon($numero, $nom, $regio, $tipus, $alcada, $pes, $evolucio, $imatge)
-{
-    
-    $pokemon = [
-        'Numero' => $numero,
-        'Nom' => $nom,
-        'Regió' => $regio,
-        'Tipus' => $tipus,
-        'Alçada' => $alcada,
-        'Pes' => $pes,
-        'Evolució' => $evolucio,
-        'Imatge' => $imatge
-    ];
-    return $pokemon;
-   
-}
+    //Crear pokemon
 
-function addPokemon(&$pokedex, $pokemon)
-{
-    
-    $i = 0;
-    $pokemonExist = false;
-    while ($pokemonExist == false && $i < count($pokedex)) {
-        if ($pokedex[$i]['Numero'] == $pokemon['Numero']) {
-            $pokemonExist = true;
-            $_SESSION['addPokemon'] = 'Error, el pokemon ya existe';
+    function crear($numero,$nom,$regio,$tipus,$alsada,$pes,$evolucio,$imatge) {
 
-        }
-        $i++;
+        $pokemon = [
+            "Numero" => $numero,
+            "Nom" => $nom,
+            "Regio" => $regio,
+            "Tipus" => $tipus,  
+            "Alsada" => $alsada,
+            "Pes" => $pes,
+            "Evolucio" => $evolucio,
+            "Imatge" => $imatge,
+        ];
+
+
+        return $pokemon;
     }
-    if ($pokemonExist == false) {
-        array_push($pokedex,$pokemon);
-        $_SESSION['addPokemon'] = 'Pokemon añadido correctamente' ;
-       
-    }
+    //Mostrar pokemon
 
-    return $pokedex;
-}
-
-function findPokemon(&$pokedex, $numero)
-{
-    $i = 0;
-    $foundPokemon = false;
-    while ($foundPokemon == false && $i < count($pokedex)) {
-        if ($pokedex[$i]['Numero'] === $numero) {
-            echo 'El pokemon con el codigo ' . $numero . ' se encuentra en la posicion ' . $i . '<br>';
-            $pokemonToShow = $pokedex[$i];
-            $foundPokemon = true;
-        }
-        $i++;
-    }
-    if (!$foundPokemon) {
-        return -1 .'<br>';
-    }
-    return $pokemonToShow;
-}
-
-function mostrarPokemon($pokemon)
-{
-
-    foreach ($pokemon as $key => $valor) {
-        if ($key == 'Tipus') {
-            foreach ($pokemon[$key] as  $valor1 => $valor2) {
-                echo $key . '=>' . $valor2 . '<br>';
+    function mostrar($pokemon) {
+        foreach($pokemon as $key => $valor) {            
+            //echo '<label>Numero: </label>' . $pokemon['Numero'];
+            if($key != "Imatge") {
+                echo $key . ": " . $valor . "</br>";
             }
-        } else {
-            echo $key . '=> ' . $valor . '<br>';
+            else {
+                //<img src="media/002.png"/>
+                echo $key . ": " . $valor . "</br>";
+                echo '<img src="media/' . $valor . '"/>'. "</br>";
+            }
+
         }
+
     }
-}
 
-function modifyPokemon(&$pokedex, $numSearch, $numero, $nom, $regio, $tipus, $alcada, $pes, $evolucio, $imatge)
-{
-    $pokemonModifyed = false;
-    $i = 0;
-    do {
-        if ($pokedex[$i]['Numero'] === $numSearch) {
-            $pokedex[$i]['Numero'] = $numero;
-            $pokedex[$i]['Nom'] = $nom;
-            $pokedex[$i]['Regió'] = $regio;
-            $pokedex[$i]['Tipus'] = $tipus;
-            $pokedex[$i]['Alçada'] = $alcada;
-            $pokedex[$i]['Pes'] = $pes;
-            $pokedex[$i]['Evolució'] = $evolucio;
-            $pokedex[$i]['Imatge'] = $imatge;
-            $pokemonModifyed = true;
-        }
-        $i++;
-    } while ($i < count($pokedex) && $pokemonModifyed == false);
-    return $pokedex;
-}
+    //Buscar pokémon per número.
+    function buscar($pokedex,$numero) {
+        $indice = -1;
+        $i = 0;
+        //var_dump($pokedex);
+        if(!empty($pokedex)) {
 
-function deletePokemon(&$pokedex, $numero)
-{
-    $indexOfPokemon = array_search($numero, array_column($pokedex, 'Numero'));
-    if ($indexOfPokemon === false) {
-        $_SESSION['deletePokemon'] = 'El pokemon seleccionado no se encuentra en la pokedex';
-    } else {
-        unset($pokedex[$indexOfPokemon]);
-        $_SESSION['deletePokemon'] = 'El pokemon seleccionado se ha borrado de la pokedex';
-        $pokedex = array_values($pokedex);
-    }
-    return $pokedex;
-}
-
-function showPokedex(&$pokedex)
-{
-    foreach ($pokedex as $pokemon) {
-        foreach ($pokemon as $key => $valor) {
-            if ($key == 'Tipus') {
-                foreach ($pokemon[$key] as  $valor1 => $valor2) {
-                    echo $key . '=>' . $valor2 . '<br>';
+            foreach($pokedex as $p) {
+                if($p["Numero"] == $numero) {
+                    $indice = $i;
                 }
-            } elseif($key =='Imatge') {
-                echo $key .'=>' . '<img src="./media/'.$valor. '" width="200" height="200">' .'<br>';
-            } else {
-                echo $key . '=> ' . $valor . '<br>';
+                $i++;
+            }
+
+        }
+        
+
+        return $indice;
+
+    }
+
+    //Afegir
+    function afegir($pokedex,$pokemon) {
+        $indice = buscar($pokedex,$pokemon["Numero"]);
+        if($indice == -1) {
+            array_push($pokedex,$pokemon);
+            $_SESSION["mensajeAfegir"] = "Pokemon añadido correctamente";
+
+            
+        }
+        else {
+            $_SESSION["mensajeAfegir"] = "Error, ya existe el pokemon el la pokedex!";
+            //echo 'Error, ya existe el pokemon el la pokedex!';
+        }
+
+        return $pokedex;
+    }
+
+    //Esborrar
+    function esborrar(&$pokedex,$pokemon) {
+        $indice = buscar($pokedex,$pokemon["Numero"]);
+        //var_dump($indice);
+        if($indice != -1) {
+            unset($pokedex[$indice]);
+            $pokedex = array_values($pokedex);
+            $_SESSION["mensajeEsborrar"] = "Pokemon borrado correctamente";
+        }
+        else {
+            $_SESSION["mensajeEsborrar"] = "Error,no esta el pokemon el la pokedex!";
+            //echo 'Error,no esta el pokemon el la pokedex!';
+        }
+    }
+
+    //Modificar
+    function modificar(&$pokedex,$numero,$nom,$regio,$tipus,$alsada,$pes,$evolucio,$imatgeName,$imatgeTMP) {
+        $encontrado = false;
+        foreach($pokedex as &$p) {
+            if($p["Numero"] == $numero) {
+                $encontrado = true;
+                $p["Nom"] = $nom;
+                $p["Regio"] = $regio;
+                $p["Tipus"] = $tipus;
+                $p["Alsada"] = $alsada;
+                $p["Pes"] = $pes;
+                $p["Evolucio"] = $evolucio;
+
+                if($imatgeName != $p["Imatge"]) {
+                    $pathImagen = obtenerRutaMediaPokedex() . $p["Imatge"];
+                    var_dump($pathImagen);
+                    unlink($pathImagen);
+
+                    $extensionImagenSplit = explode(".",$imatgeName);
+                    $extensionImagen = $extensionImagenSplit[count($extensionImagenSplit) - 1];
+                    $imatgeName = $numero . '.' . $extensionImagen;
+
+
+                    $p["Imatge"] = $imatgeName;
+                    $pathImagen = obtenerRutaMediaPokedex() . $imatgeName;
+                    move_uploaded_file($imatgeTMP,$pathImagen);
+                }
+                
             }
         }
-        echo '<br>';
+
+        if(!$encontrado) {
+            $_SESSION["mensajeEsborrar"] = 'Error,no esta el pokemon el la pokedex!';
+        }
+
+
     }
-}
+    //Mostrar pokédex
+    function mostrarPokedex($pokedex) {
+        foreach($pokedex as $p) {
+            mostrar($p);
+        }
+
+    }
+
+    function obtenerRutaMediaPokedex() {
+
+        $rutaMedia = getcwd();
+
+        //var_dump($rutaMedia);
+
+        $rutaMedia = str_replace('\\',"/",$rutaMedia);
+        
+        $rutaMedia = substr($rutaMedia,0,strlen($rutaMedia) - 15) . "media/";
+
+        return $rutaMedia;
+
+    }
+
+?>  
